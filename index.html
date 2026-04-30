@@ -250,7 +250,6 @@
                 question: <div>Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật có trong hình ảnh dưới đây.</div>,
                 renderCustomInput: (answers, onChange, submitted) => (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-                        {/* Tua - vít */}
                         <div className="flex flex-col gap-4">
                             <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
                                 <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
@@ -276,7 +275,6 @@
                                 />
                             </div>
                         </div>
-                        {/* Cờ - lê */}
                         <div className="flex flex-col gap-4">
                             <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
                                 <svg width="150" height="40" viewBox="0 0 150 40">
@@ -591,18 +589,24 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
         };
 
         function App() {
-          const [activeTab, setActiveTab] = useState('tiengViet'); 
-          const [answers, setAnswers] = useState({});
-          const [submitted, setSubmitted] = useState(false);
-          const [scoreTN, setScoreTN] = useState(0);
+          // KHỞI TẠO STATE TỪ LOCAL STORAGE (Nếu có)
+          const [activeTab, setActiveTab] = useState(() => localStorage.getItem('quiz_activeTab') || 'tiengViet'); 
+          const [answers, setAnswers] = useState(() => JSON.parse(localStorage.getItem('quiz_answers')) || {});
+          const [submitted, setSubmitted] = useState(() => localStorage.getItem('quiz_submitted') === 'true');
+          const [scoreTN, setScoreTN] = useState(() => parseFloat(localStorage.getItem('quiz_scoreTN')) || 0);
 
           const currentData = quizData[activeTab];
 
+          // LƯU STATE VÀO LOCAL STORAGE KHI CÓ THAY ĐỔI
+          useEffect(() => {
+              localStorage.setItem('quiz_activeTab', activeTab);
+              localStorage.setItem('quiz_answers', JSON.stringify(answers));
+              localStorage.setItem('quiz_submitted', submitted);
+              localStorage.setItem('quiz_scoreTN', scoreTN);
+          }, [activeTab, answers, submitted, scoreTN]);
+
           const handleTabChange = (tab) => {
             setActiveTab(tab);
-            setAnswers({});
-            setSubmitted(false);
-            setScoreTN(0);
           };
 
           const handleOptionChange = (questionId, optionKey) => {
@@ -636,10 +640,14 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
             window.scrollTo({ top: 0, behavior: 'smooth' });
           };
 
+          // HÀM RESET XOÁ SẠCH DỮ LIỆU CẢ LOCAL STORAGE
           const resetQuiz = () => {
             setAnswers({});
             setSubmitted(false);
             setScoreTN(0);
+            localStorage.removeItem('quiz_answers');
+            localStorage.removeItem('quiz_submitted');
+            localStorage.removeItem('quiz_scoreTN');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           };
 
