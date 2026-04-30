@@ -87,6 +87,24 @@
             />
         );
 
+        const MathLightInput = ({ value, onChange, disabled }) => (
+            <input 
+                type="text" 
+                value={value || ''} 
+                onChange={(e) => onChange(e.target.value)} 
+                disabled={disabled}
+                className={`w-10 h-10 md:w-12 md:h-12 text-center border-2 border-emerald-400 rounded-lg font-bold text-xl text-emerald-900 focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`}
+            />
+        );
+
+        const FractionInputLight = ({ prefix, answers, onChange, submitted }) => (
+            <div className="flex flex-col gap-1 items-center">
+                <MathLightInput value={answers[prefix+'_n']} onChange={(v) => onChange(prefix+'_n', v)} disabled={submitted} />
+                <div className="w-full h-[2.5px] bg-emerald-800 rounded-full"></div>
+                <MathLightInput value={answers[prefix+'_d']} onChange={(v) => onChange(prefix+'_d', v)} disabled={submitted} />
+            </div>
+        );
+
         const MathDarkInput = ({ value, onChange, disabled }) => (
             <input 
                 type="text" 
@@ -157,6 +175,103 @@
                 </div>
             </div>
         );
+
+        // Component Lưới Vẽ Hình Thoi
+        const GridDrawing = ({ prefix, answers, onChange, submitted }) => {
+            const step = 30; // Kích thước mỗi ô vuông (pixels)
+            const cols = 20;
+            const rows = 8;
+            const width = cols * step;
+            const height = rows * step;
+
+            const points = answers[prefix + '_points'] ? JSON.parse(answers[prefix + '_points']) : [];
+
+            const handleClick = (e) => {
+                if (submitted) return;
+                const rect = e.currentTarget.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Căn lề vào điểm giao nhau gần nhất của lưới
+                const snapX = Math.round(x / step) * step;
+                const snapY = Math.round(y / step) * step;
+
+                // Kiểm tra giới hạn lưới
+                if (snapX >= 0 && snapX <= width && snapY >= 0 && snapY <= height) {
+                    const newPoints = [...points, {x: snapX, y: snapY}];
+                    onChange(prefix + '_points', JSON.stringify(newPoints));
+                }
+            };
+
+            const handleClear = () => {
+                if (submitted) return;
+                onChange(prefix + '_points', JSON.stringify([]));
+            };
+
+            return (
+                <div className="flex flex-col gap-4 mt-4">
+                    <p className="text-sm text-emerald-700 italic bg-emerald-50 inline-block px-4 py-2 rounded-full border border-emerald-200">
+                        💡 <b>Hướng dẫn vẽ:</b> Hãy nhấp chuột (hoặc chạm) vào các điểm giao nhau trên lưới bên dưới để vẽ từng đỉnh của hình thoi nhé! Lưới mô phỏng giấy ô li (mỗi ô vuông là 1 cm).
+                    </p>
+                    
+                    <div className="relative border-2 border-emerald-300 rounded overflow-x-auto overflow-y-hidden bg-white shadow-inner">
+                        <svg width={width} height={height} onClick={handleClick} className={`cursor-crosshair ${submitted ? '' : 'hover:bg-emerald-50/20'} transition-colors`} style={{ minWidth: `${width}px` }}>
+                            <defs>
+                                <pattern id="dotGrid" width={step} height={step} patternUnits="userSpaceOnUse">
+                                    <path d={`M ${step} 0 L 0 0 0 ${step}`} fill="none" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 2"/>
+                                </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill="url(#dotGrid)" />
+                            
+                            {/* Vẽ đường nối */}
+                            {points.length > 1 && (
+                                <polyline
+                                    points={points.map(p => `${p.x},${p.y}`).join(' ')}
+                                    fill={points.length >= 4 ? "rgba(16, 185, 129, 0.1)" : "none"}
+                                    stroke="#059669"
+                                    strokeWidth="3"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            )}
+                            {/* Vẽ nét đứt đóng khung nếu đã có từ 3 điểm trở lên (để dễ hình dung) */}
+                            {points.length > 2 && (
+                                <line 
+                                    x1={points[points.length-1].x} y1={points[points.length-1].y} 
+                                    x2={points[0].x} y2={points[0].y} 
+                                    stroke="#059669" strokeWidth="3" strokeDasharray="6 4" opacity="0.5"
+                                />
+                            )}
+                            
+                            {/* Vẽ các điểm đỉnh */}
+                            {points.map((p, i) => (
+                                <circle key={i} cx={p.x} cy={p.y} r="5" fill="#047857" className="shadow-sm" />
+                            ))}
+                        </svg>
+                    </div>
+                    
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
+                        {!submitted && (
+                            <button onClick={handleClear} className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2">
+                                <RefreshCw size={16} /> Xoá hình vẽ lại
+                            </button>
+                        )}
+                        <div className="flex items-center gap-3 ml-auto">
+                            <span className="font-bold text-slate-700">Tên hình thoi:</span>
+                            <input 
+                                type="text" 
+                                value={answers[prefix + '_name'] || ''}
+                                onChange={e => onChange(prefix + '_name', e.target.value)}
+                                disabled={submitted}
+                                className="h-10 w-28 px-3 text-center border-2 border-emerald-300 focus:border-emerald-500 rounded-lg outline-none font-bold text-emerald-900 uppercase tracking-widest shadow-sm"
+                                placeholder="VD: ABCD"
+                                maxLength="4"
+                            />
+                        </div>
+                    </div>
+                </div>
+            )
+        };
 
         const MathSvgQ1 = () => (
             <svg width="100%" height="auto" viewBox="0 0 320 200" className="max-w-md mx-auto bg-white border border-gray-300 rounded-lg shadow-sm">
@@ -389,8 +504,60 @@
                 ),
                 hint: <div>a) <Frac n="6" d="6"/> = 1<br/><br/>b) <Frac n="2" d="5"/> &lt; <Frac n="3" d="5"/></div> 
               },
-              { id: 't_tl6', question: <div>Câu 6 (1 điểm). Có hai túi đậu đen. Túi thứ nhất cân nặng <Frac n="3" d="5"/> kg. Túi thứ hai nặng hơn túi thứ nhất <Frac n="2" d="5"/> kg. Hỏi cả hai túi cân nặng bao nhiêu ki-lô-gam?</div>, hint: <div><b>Bài giải:</b><br/>Số ki-lô-gam túi đậu đen thứ hai cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="2" d="5"/> = <Frac n="5" d="5"/> (kg)<br/>Số ki-lô-gam cả hai túi đậu đen cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="5" d="5"/> = <Frac n="8" d="5"/> (kg)<br/><b>Đáp số:</b> <Frac n="8" d="5"/> ki-lô-gam.</div> },
-              { id: 't_tl7', question: <div>Câu 7 (1 điểm). Vẽ một hình thoi có cạnh dài 3 cm và đặt tên cho hình thoi đó.</div>, hint: <div>Bé hãy dùng thước kẻ và bút chì để vẽ ra nháp một hình thoi (có 4 cạnh bằng nhau, mỗi cạnh dài 3cm) và đặt tên 4 đỉnh nhé (Ví dụ: ABCD).</div> }
+              { id: 't_tl6', question: <div>Câu 6 (1 điểm). Có hai túi đậu đen. Túi thứ nhất cân nặng <Frac n="3" d="5"/> kg. Túi thứ hai nặng hơn túi thứ nhất <Frac n="2" d="5"/> kg. Hỏi cả hai túi cân nặng bao nhiêu ki-lô-gam?</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4 text-lg text-slate-800 font-medium bg-emerald-50/50 p-4 md:p-6 rounded-xl border border-emerald-100">
+                        <div><b>Bài giải:</b></div>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex items-end gap-2 w-full">
+                                <input 
+                                    type="text" value={answers['t_tl6_text1'] || ''} onChange={(e) => onChange('t_tl6_text1', e.target.value)} disabled={submitted}
+                                    placeholder="Nhập lời giải thứ nhất vào đây..."
+                                    className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all"
+                                />
+                                <span className="font-bold">:</span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-3 ml-4 md:ml-8">
+                                <FractionInputLight prefix="t_tl6_f1" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-2xl font-bold text-emerald-700">+</span>
+                                <FractionInputLight prefix="t_tl6_f2" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-2xl font-bold text-emerald-700">=</span>
+                                <FractionInputLight prefix="t_tl6_f3" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-lg font-bold text-slate-700">(kg)</span>
+                            </div>
+                        </div>
+                        <div className="flex flex-col gap-4 mt-2">
+                            <div className="flex items-end gap-2 w-full">
+                                <input 
+                                    type="text" value={answers['t_tl6_text2'] || ''} onChange={(e) => onChange('t_tl6_text2', e.target.value)} disabled={submitted}
+                                    placeholder="Nhập lời giải thứ hai vào đây..."
+                                    className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all"
+                                />
+                                <span className="font-bold">:</span>
+                            </div>
+                            <div className="flex flex-wrap items-center gap-3 ml-4 md:ml-8">
+                                <FractionInputLight prefix="t_tl6_f4" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-2xl font-bold text-emerald-700">+</span>
+                                <FractionInputLight prefix="t_tl6_f5" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-2xl font-bold text-emerald-700">=</span>
+                                <FractionInputLight prefix="t_tl6_f6" answers={answers} onChange={onChange} submitted={submitted} />
+                                <span className="text-lg font-bold text-slate-700">(kg)</span>
+                            </div>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4 mt-6 pt-4 border-t border-emerald-200">
+                            <b className="text-xl">Đáp số:</b>
+                            <FractionInputLight prefix="t_tl6_f7" answers={answers} onChange={onChange} submitted={submitted} />
+                            <span className="text-lg font-bold text-slate-700">ki-lô-gam.</span>
+                        </div>
+                    </div>
+                ),
+                hint: <div><b>Bài giải:</b><br/>Số ki-lô-gam túi đậu đen thứ hai cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="2" d="5"/> = <Frac n="5" d="5"/> (kg)<br/>Số ki-lô-gam cả hai túi đậu đen cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="5" d="5"/> = <Frac n="8" d="5"/> (kg)<br/><b>Đáp số:</b> <Frac n="8" d="5"/> ki-lô-gam.</div> 
+              },
+              { id: 't_tl7', question: <div>Câu 7 (1 điểm). Vẽ một hình thoi có cạnh dài 3 cm và đặt tên cho hình thoi đó.</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <GridDrawing prefix="t_tl7" answers={answers} onChange={onChange} submitted={submitted} />
+                ),
+                hint: <div>Bé hãy nhấn vào các điểm giao nhau trên lưới kẻ ô vuông bên trên để vẽ nhé. Đừng quên gõ tên của hình thoi vừa vẽ (VD: ABCD) vào ô "Tên hình thoi".</div> }
             ]
           },
           tiengViet: {
