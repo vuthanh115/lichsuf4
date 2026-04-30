@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề thi Lịch sử - Địa lí 4</title>
+    
+    <!-- Tải các thư viện cần thiết (Chỉ cần mạng trong lần tải đầu tiên, sau đó trình duyệt sẽ lưu vào bộ nhớ tạm) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-blue-50">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // Các biểu tượng (Icons)
+        const CheckCircle2 = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        );
+        const XCircle = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+        );
+        const Award = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+        );
+        const BookOpen = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        );
+        const PenTool = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 19 7-7 3 3-7 7-3-3z"></path><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="m2 2 7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
+        );
+        const RefreshCw = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+        );
+
+        const quizData = {
+          tracNghiem: [
+            {
+              id: 'q1',
+              question: 'Câu 1. Đặc điểm khí hậu của vùng Bắc Trung Bộ và Nam Trung Bộ là:',
+              options: {
+                A: 'Mát mẻ và ẩm ướt quanh năm',
+                B: 'Nóng và khô hạn',
+                C: 'Lạnh và mùa đông kéo dài',
+                D: 'Nóng và mưa nhiều vào mùa thu, mùa đông'
+              },
+              correct: 'D',
+              score: 0.5
+            },
+            {
+              id: 'q2',
+              question: 'Câu 2. Khí hậu ở Nam Bộ được chia thành mấy mùa?',
+              options: {
+                A: '1 mùa',
+                B: '2 mùa',
+                C: '3 mùa',
+                D: '4 mùa'
+              },
+              correct: 'B',
+              score: 0.5
+            },
+            {
+              id: 'q3',
+              question: 'Câu 3. Phần lớn dân cư vùng Bắc Trung Bộ và Nam Trung Bộ phân bố ở đâu?',
+              options: {
+                A: 'Miền núi',
+                B: 'Trung tâm thành phố',
+                C: 'Đồng bằng và ven biển',
+                D: 'Cả đồng bằng và miền núi'
+              },
+              correct: 'C',
+              score: 1.0
+            },
+            {
+              id: 'q5',
+              question: 'Câu 5. Thành phố Hồ Chí Minh còn có tên gọi khác là:',
+              options: {
+                A: 'Hà Nội',
+                B: 'Đà Nẵng',
+                C: 'Bình Dương',
+                D: 'Sài Gòn'
+              },
+              correct: 'D',
+              score: 1.0
+            },
+            {
+              id: 'q6',
+              question: 'Câu 6. Nét văn hóa của người dân Nam Bộ là:',
+              options: {
+                A: 'Chợ đêm',
+                B: 'Chợ truyền thống',
+                C: 'Chợ phiên',
+                D: 'Chợ nổi'
+              },
+              correct: 'D',
+              score: 1.0
+            }
+          ],
+          tuLuan: [
+            {
+              id: 'tl1',
+              question: 'Câu 1 (1 điểm). Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển ngành nghề nào?',
+              hint: 'Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển nông nghiệp.'
+            },
+            {
+              id: 'tl2',
+              question: 'Câu 2 (1 điểm). Theo em, Địa đạo Củ Chi có ý nghĩa lịch sử như thế nào?',
+              hint: 'Địa đạo Củ Chi thể hiện ý chí kiên cường, trí thông minh, niềm tự hào của người dân Củ Chi, là biểu tượng của chủ nghĩa anh hùng cách mạng của dân tộc Việt Nam.'
+            },
+            {
+              id: 'tl3',
+              question: 'Câu 3 (1 điểm). Theo em, điều gì thu hút khách du lịch đến phố cổ Hội An?',
+              hint: 'Lí do Phố cổ Hội An thu hút khách du lịch là:\n- Nhiều sản phẩm du lịch độc đáo.\n- Hoạt động văn hóa truyền thống đặc sắc.\n- Cảnh quan thiên nhiên đẹp, đa dạng, con người chan hòa, thân thiện.'
+            },
+            {
+              id: 'tl4',
+              question: 'Câu 4 (1 điểm). Em cần có những biện pháp như thế nào để bảo tồn và giữ gìn giá trị Cố đô Huế?',
+              hint: 'Một số biện pháp để bảo tồn, giữ gìn giá trị Cố đô Huế như:\n- Tu bổ các di tích thường xuyên.\n- Tuyên truyền ý thức khách du lịch về việc bảo tồn, giữ gìn các di tích.'
+            }
+          ]
+        };
+
+        const q4Options = ["qua đời", "vật chất", "trưởng thành", "tinh thần", "sinh ra"];
+        const q4Answers = {
+          q4_1: "tinh thần",
+          q4_2: "sinh ra",
+          q4_3: "trưởng thành"
+        };
+
+        function App() {
+          const [answers, setAnswers] = useState({});
+          const [submitted, setSubmitted] = useState(false);
+          const [scoreTN, setScoreTN] = useState(0);
+
+          const handleOptionChange = (questionId, optionKey) => {
+            if (submitted) return;
+            setAnswers(prev => ({ ...prev, [questionId]: optionKey }));
+          };
+
+          const handleTextChange = (questionId, text) => {
+            if (submitted) return;
+            setAnswers(prev => ({ ...prev, [questionId]: text }));
+          };
+
+          const calculateScore = () => {
+            let score = 0;
+            quizData.tracNghiem.forEach(q => {
+              if (answers[q.id] === q.correct) {
+                score += q.score;
+              }
+            });
+            if (answers['q4_1'] === q4Answers['q4_1']) score += 0.5;
+            if (answers['q4_2'] === q4Answers['q4_2']) score += 0.5;
+            if (answers['q4_3'] === q4Answers['q4_3']) score += 0.5;
+
+            setScoreTN(score);
+            setSubmitted(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+
+          const resetQuiz = () => {
+            setAnswers({});
+            setSubmitted(false);
+            setScoreTN(0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+
+          return (
+            <div className="min-h-screen py-8 px-4 font-sans text-gray-800">
+              <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-blue-100">
+                
+                {/* Header */}
+                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white text-center relative overflow-hidden">
+                  <BookOpen className="absolute -left-4 -top-4 w-24 h-24 text-white opacity-20 transform -rotate-12" />
+                  <Award className="absolute -right-4 -top-4 w-24 h-24 text-white opacity-20 transform rotate-12" />
+                  <h1 className="text-3xl md:text-4xl font-bold mb-2">ĐỀ ÔN CUỐI KÌ 2</h1>
+                  <h2 className="text-xl md:text-2xl font-medium opacity-90">Môn: Lịch sử - Địa lí lớp 4</h2>
+                </div>
+
+                {/* Bảng kết quả */}
+                {submitted && (
+                  <div className="m-6 p-6 bg-yellow-50 border-2 border-yellow-400 rounded-xl flex flex-col items-center shadow-sm">
+                    <h3 className="text-2xl font-bold text-yellow-700 mb-2">Kết quả phần Trắc nghiệm</h3>
+                    <div className="text-5xl font-black text-yellow-600 mb-2">{scoreTN.toFixed(1)} / 6.0</div>
+                    <p className="text-gray-700 text-center text-lg mb-4">
+                      Tuyệt vời! Con đã hoàn thành phần trắc nghiệm. Hãy tiếp tục ôn tập phần Tự luận bên dưới nhé!
+                    </p>
+                    <button 
+                      onClick={resetQuiz}
+                      className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105"
+                    >
+                      <RefreshCw size={20} /> Làm lại bài
+                    </button>
+                  </div>
+                )}
+
+                <div className="p-6 md:p-8">
+                  {/* I. PHẦN TRẮC NGHIỆM */}
+                  <section className="mb-12">
+                    <div className="flex items-center gap-3 border-b-2 border-blue-200 pb-3 mb-6">
+                      <div className="bg-blue-500 text-white p-2 rounded-lg">
+                        <CheckCircle2 size={24} />
+                      </div>
+                      <h2 className="text-2xl font-bold text-blue-800">I. PHẦN TRẮC NGHIỆM (6 điểm)</h2>
+                    </div>
+
+                    <div className="space-y-8">
+                      {quizData.tracNghiem.slice(0, 3).map((q) => (
+                        <div key={q.id} className="bg-gray-50 p-5 rounded-xl border border-gray-100 shadow-sm">
+                          <p className="font-semibold text-lg mb-4 text-gray-800">{q.question}</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {Object.entries(q.options).map(([key, value]) => {
+                              const isSelected = answers[q.id] === key;
+                              const isCorrect = q.correct === key;
+                              
+                              let btnClass = "text-left p-3 rounded-lg border-2 transition-all duration-200 flex items-start gap-3 ";
+                              if (!submitted) {
+                                btnClass += isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-200 hover:border-blue-300 hover:bg-blue-50";
+                              } else {
+                                if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
+                                else if (isSelected && !isCorrect) btnClass += "bg-red-100 border-red-500 text-red-800";
+                                else btnClass += "bg-white border-gray-200 opacity-50";
+                              }
+
+                              return (
+                                <button
+                                  key={key}
+                                  onClick={() => handleOptionChange(q.id, key)}
+                                  disabled={submitted}
+                                  className={btnClass}
+                                >
+                                  <span className={`w-6 h-6 shrink-0 flex items-center justify-center rounded-full text-sm font-bold ${
+                                    (submitted && isCorrect) ? "bg-green-500 text-white" : 
+                                    (submitted && isSelected && !isCorrect) ? "bg-red-500 text-white" : 
+                                    isSelected ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
+                                  }`}>
+                                    {key}
+                                  </span>
+                                  <span className="leading-tight pt-0.5">{value}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                          {submitted && answers[q.id] !== q.correct && (
+                            <div className="mt-3 flex items-center gap-2 text-red-600 font-medium">
+                              <XCircle size={18} /> Sai rồi! Đáp án đúng là {q.correct}.
+                            </div>
+                          )}
+                          {submitted && answers[q.id] === q.correct && (
+                            <div className="mt-3 flex items-center gap-2 text-green-600 font-medium">
+                              <CheckCircle2 size={18} /> Chính xác! (+{q.score}đ)
+                            </div>
+                          )}
+                        </div>
+                      ))}
+
+                      {/* CÂU 4 ĐẶC BIỆT: ĐIỀN KHUYẾT */}
+                      <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 shadow-sm">
+                        <p className="font-semibold text-lg mb-3 text-gray-800">
+                          Câu 4 (1.5 điểm). Chọn từ thích hợp để điền vào chỗ trống.
+                        </p>
+                        <div className="flex flex-wrap gap-2 mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                          <span className="text-gray-500 font-medium mr-2">Từ gợi ý:</span>
+                          {q4Options.map(opt => (
+                            <span key={opt} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
+                              {opt}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="text-lg leading-loose text-gray-800 bg-white p-4 rounded-xl border border-gray-200">
+                          Cồng chiêng gắn liền với đời sống 
+                          <select 
+                            disabled={submitted}
+                            value={answers['q4_1'] || ''}
+                            onChange={(e) => handleOptionChange('q4_1', e.target.value)}
+                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
+                              !submitted ? 'border-blue-500 text-blue-700' : 
+                              answers['q4_1'] === q4Answers['q4_1'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
+                            }`}
+                          >
+                            <option value="" disabled>--- (1) ---</option>
+                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                          </select>
+                          của người Tây Nguyên từ lúc 
+                          <select 
+                            disabled={submitted}
+                            value={answers['q4_2'] || ''}
+                            onChange={(e) => handleOptionChange('q4_2', e.target.value)}
+                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
+                              !submitted ? 'border-blue-500 text-blue-700' : 
+                              answers['q4_2'] === q4Answers['q4_2'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
+                            }`}
+                          >
+                            <option value="" disabled>--- (2) ---</option>
+                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                          </select>
+                          đến khi 
+                          <select 
+                            disabled={submitted}
+                            value={answers['q4_3'] || ''}
+                            onChange={(e) => handleOptionChange('q4_3', e.target.value)}
+                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
+                              !submitted ? 'border-blue-500 text-blue-700' : 
+                              answers['q4_3'] === q4Answers['q4_3'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
+                            }`}
+                          >
+                            <option value="" disabled>--- (3) ---</option>
+                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
+                          </select>.
+                        </div>
+                        
+                        {submitted && (
+                          <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
+                            <p className="font-bold text-gray-700 mb-1">Đáp án đúng:</p>
+                            <ul className="list-disc pl-5 text-green-700 font-medium">
+                              <li>(1) {q4Answers.q4_1}</li>
+                              <li>(2) {q4Answers.q4_2}</li>
+                              <li>(3) {q4Answers.q4_3}</li>
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Các câu trắc nghiệm còn lại (Câu 5, 6) */}
+                      {quizData.tracNghiem.slice(3).map((q) => (
+                        <div key={q.id} className="bg-gray-50 p-5 rounded-xl border border-gray-100 shadow-sm">
+                          <p className="font-semibold text-lg mb-4 text-gray-800">{q.question}</p>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                            {Object.entries(q.options).map(([key, value]) => {
+                              const isSelected = answers[q.id] === key;
+                              const isCorrect = q.correct === key;
+                              
+                              let btnClass = "text-left p-3 rounded-lg border-2 transition-all duration-200 flex items-start gap-3 ";
+                              if (!submitted) {
+                                btnClass += isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-200 hover:border-blue-300 hover:bg-blue-50";
+                              } else {
+                                if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
+                                else if (isSelected && !isCorrect) btnClass += "bg-red-100 border-red-500 text-red-800";
+                                else btnClass += "bg-white border-gray-200 opacity-50";
+                              }
+
+                              return (
+                                <button
+                                  key={key}
+                                  onClick={() => handleOptionChange(q.id, key)}
+                                  disabled={submitted}
+                                  className={btnClass}
+                                >
+                                  <span className={`w-6 h-6 shrink-0 flex items-center justify-center rounded-full text-sm font-bold ${
+                                    (submitted && isCorrect) ? "bg-green-500 text-white" : 
+                                    (submitted && isSelected && !isCorrect) ? "bg-red-500 text-white" : 
+                                    isSelected ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
+                                  }`}>
+                                    {key}
+                                  </span>
+                                  <span className="leading-tight pt-0.5">{value}</span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                          {submitted && answers[q.id] !== q.correct && (
+                            <div className="mt-3 flex items-center gap-2 text-red-600 font-medium">
+                              <XCircle size={18} /> Sai rồi! Đáp án đúng là {q.correct}.
+                            </div>
+                          )}
+                          {submitted && answers[q.id] === q.correct && (
+                            <div className="mt-3 flex items-center gap-2 text-green-600 font-medium">
+                              <CheckCircle2 size={18} /> Chính xác! (+{q.score}đ)
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* II. PHẦN TỰ LUẬN */}
+                  <section className="mb-8">
+                    <div className="flex items-center gap-3 border-b-2 border-indigo-200 pb-3 mb-6">
+                      <div className="bg-indigo-500 text-white p-2 rounded-lg">
+                        <PenTool size={24} />
+                      </div>
+                      <h2 className="text-2xl font-bold text-indigo-800">II. PHẦN TỰ LUẬN (4 điểm)</h2>
+                    </div>
+
+                    <div className="space-y-6">
+                      {quizData.tuLuan.map((q) => (
+                        <div key={q.id} className="bg-white p-5 rounded-xl border-2 border-indigo-100 shadow-sm flex flex-col gap-4">
+                          <p className="font-semibold text-xl text-gray-800">{q.question}</p>
+                          
+                          <textarea
+                            disabled={submitted}
+                            value={answers[q.id] || ''}
+                            onChange={(e) => handleTextChange(q.id, e.target.value)}
+                            placeholder="Bé hãy gõ câu trả lời vào đây..."
+                            className="w-full min-h-[100px] p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y transition-shadow disabled:bg-gray-50 disabled:text-gray-600 text-lg"
+                          ></textarea>
+
+                          <div className="p-5 bg-indigo-50 border border-indigo-200 rounded-xl">
+                            <h4 className="font-bold text-indigo-800 mb-2 flex items-center gap-2">
+                              <BookOpen size={20} /> Đáp án để bé học thuộc:
+                            </h4>
+                            <p className="text-indigo-950 whitespace-pre-line text-lg leading-relaxed font-medium">
+                              {q.hint}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
+
+                  {/* Nút Nộp Bài */}
+                  {!submitted && (
+                    <div className="text-center mt-10">
+                      <button
+                        onClick={calculateScore}
+                        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-10 py-4 rounded-full text-xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all"
+                      >
+                        Nộp bài & Xem kết quả
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
