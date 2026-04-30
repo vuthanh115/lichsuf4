@@ -611,7 +611,45 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                 hint: <div><b>Đáp án:</b> Chiều chiều</div> 
               },
               { id: 'tv_tl11', question: 'Câu 11 (1 điểm). Đặt một câu trong đó có sử dụng từ ngữ tả cảnh núi non hoặc sông nước.', hint: 'Ví dụ: Con sông quê hương uốn lượn như một con rắn khổng lồ.' },
-              { id: 'tv_tlv', question: <div><b>III. TẬP LÀM VĂN: (10 điểm)</b><br/><br/><b>Đề bài:</b> Viết bài văn tả một con vật hoặc loài vật mà em yêu thích.</div>, hint: <div><b>Hướng dẫn dàn ý:</b><br/>- Mở bài: Giới thiệu con vật hoặc loài vật.<br/>- Thân bài:<br/>&nbsp;&nbsp;+ Tả đặc điểm nổi bật về hình dáng.<br/>&nbsp;&nbsp;+ Tả hoạt động hoặc thói quen.<br/>&nbsp;&nbsp;+ Nêu cách chăm sóc và bảo vệ con vật, loài vật.<br/>- Kết bài: Nêu suy nghĩ, tình cảm, sự gắn bó... với con vật hoặc loài vật.<br/><br/><b>Bài văn tham khảo (Tả con mèo):</b><br/>Nhà em có nuôi một con mèo rất đáng yêu, em đặt tên cho nó là Miu Miu.<br/><br/>Miu Miu có thân hình nhỏ nhắn, xinh xắn như một cục bông di động. Bộ lông của nó mềm mại và mượt mà. Đôi mắt của Miu Miu tròn xoe, long lanh như hai hòn bi ve. Cái mũi hồng hồng, lúc nào cũng ươn ướt, trông rất đáng yêu. Hai cái tai nhỏ luôn dựng đứng, chỉ cần có tiếng động nhẹ là tai nó đã khẽ động đậy như đang lắng nghe. Cái đuôi dài và mềm mại của Miu Miu thường phe phẩy qua lại, giống như một chiếc roi nhỏ đang vui đùa. Bốn chân của nó nhỏ nhưng rất nhanh nhẹn, giúp nó chạy nhảy thoăn thoắt khắp sân nhà. Mỗi bước đi của Miu Miu đều nhẹ nhàng như không chạm đất. Miu Miu rất thông minh và tinh nghịch. Nó đặc biệt giỏi bắt chuột. Mỗi khi phát hiện có chuột, nó lập tức nằm im rình rập, đôi mắt chăm chú không rời. Chỉ cần con chuột sơ hở, Miu Miu liền lao tới nhanh như chớp, khiến em vô cùng khâm phục.<br/><br/>Em rất yêu quý Miu Miu vì chú không chỉ là một con mèo mà còn là người bạn nhỏ luôn ở bên em mỗi ngày. Em sẽ chăm sóc và yêu thương Miu Miu thật tốt để chú luôn khỏe mạnh, đáng yêu và mãi là niềm vui trong gia đình.</div> }
+              { 
+                id: 'tv_tlv', 
+                question: <div><b>III. TẬP LÀM VĂN: (10 điểm)</b><br/><br/><b>Đề bài:</b> Viết bài văn tả một con vật hoặc loài vật mà em yêu thích.</div>, 
+                hideDefaultHint: true,
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="flex flex-col lg:flex-row gap-6 mt-4">
+                        <div className="flex-1 bg-rose-50 border border-rose-200 rounded-xl p-5 h-[600px] overflow-y-auto">
+                            <h4 className="font-bold text-rose-800 mb-3 flex items-center gap-2">
+                                <BookOpen size={20} /> Hướng dẫn & Bài văn tham khảo:
+                            </h4>
+                            <div className="text-rose-950 text-lg leading-relaxed font-medium">
+                                <b>Hướng dẫn dàn ý:</b><br/>
+                                - Mở bài: Giới thiệu con vật hoặc loài vật.<br/>
+                                - Thân bài:<br/>
+                                &nbsp;&nbsp;+ Tả đặc điểm nổi bật về hình dáng.<br/>
+                                &nbsp;&nbsp;+ Tả hoạt động hoặc thói quen.<br/>
+                                &nbsp;&nbsp;+ Nêu cách chăm sóc và bảo vệ con vật, loài vật.<br/>
+                                - Kết bài: Nêu suy nghĩ, tình cảm, sự gắn bó... với con vật hoặc loài vật.<br/><br/>
+                                <b>Bài văn tham khảo (Tả con mèo):</b><br/>
+                                Nhà em có nuôi một con mèo rất đáng yêu, em đặt tên cho nó là Miu Miu.<br/><br/>
+                                Miu Miu có thân hình nhỏ nhắn, xinh xắn như một cục bông di động. Bộ lông của nó mềm mại và mượt mà. Đôi mắt của Miu Miu tròn xoe, long lanh như hai hòn bi ve. Cái mũi hồng hồng, lúc nào cũng ươn ướt, trông rất đáng yêu. Hai cái tai nhỏ luôn dựng đứng, chỉ cần có tiếng động nhẹ là tai nó đã khẽ động đậy như đang lắng nghe. Cái đuôi dài và mềm mại của Miu Miu thường phe phẩy qua lại, giống như một chiếc roi nhỏ đang vui đùa. Bốn chân của nó nhỏ nhưng rất nhanh nhẹn, giúp nó chạy nhảy thoăn thoắt khắp sân nhà. Mỗi bước đi của Miu Miu đều nhẹ nhàng như không chạm đất. Miu Miu rất thông minh và tinh nghịch. Nó đặc biệt giỏi bắt chuột. Mỗi khi phát hiện có chuột, nó lập tức nằm im rình rập, đôi mắt chăm chú không rời. Chỉ cần con chuột sơ hở, Miu Miu liền lao tới nhanh như chớp, khiến em vô cùng khâm phục.<br/><br/>
+                                Em rất yêu quý Miu Miu vì chú không chỉ là một con mèo mà còn là người bạn nhỏ luôn ở bên em mỗi ngày. Em sẽ chăm sóc và yêu thương Miu Miu thật tốt để chú luôn khỏe mạnh, đáng yêu và mãi là niềm vui trong gia đình.
+                            </div>
+                        </div>
+                        <div className="flex-1 flex flex-col">
+                            <h4 className="font-bold text-gray-700 mb-3 flex items-center gap-2">
+                                <PenTool size={20} className="text-gray-500" /> Bài làm của bé:
+                            </h4>
+                            <textarea
+                                disabled={submitted} 
+                                value={answers['tv_tlv'] || ''} 
+                                onChange={(e) => onChange('tv_tlv', e.target.value)}
+                                placeholder="Bé hãy gõ bài văn của mình vào đây nhé..."
+                                className="w-full flex-1 p-4 border-2 border-rose-300 rounded-xl focus:ring-4 focus:ring-rose-100 outline-none resize-none transition-shadow disabled:bg-gray-50 disabled:text-gray-600 text-lg focus:border-rose-500 leading-relaxed"
+                            ></textarea>
+                        </div>
+                    </div>
+                )
+              }
             ]
           }
         };
@@ -994,10 +1032,12 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                               ></textarea>
                           )}
 
-                          <div className={`p-5 bg-${currentData.theme}-50 border ${colors.border} rounded-xl`}>
-                            <h4 className={`font-bold ${colors.text} mb-3 flex items-center gap-2`}><BookOpen size={20} /> Hướng dẫn & Đáp án:</h4>
-                            <div className={`text-${currentData.theme}-950 text-lg leading-relaxed font-medium`}>{q.hint}</div>
-                          </div>
+                          {!q.hideDefaultHint && (
+                              <div className={`p-5 bg-${currentData.theme}-50 border ${colors.border} rounded-xl`}>
+                                <h4 className={`font-bold ${colors.text} mb-3 flex items-center gap-2`}><BookOpen size={20} /> Hướng dẫn & Đáp án:</h4>
+                                <div className={`text-${currentData.theme}-950 text-lg leading-relaxed font-medium`}>{q.hint}</div>
+                              </div>
+                          )}
                         </div>
                       ))}
                     </div>
