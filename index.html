@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đề thi Lịch sử - Địa lí 4</title>
+    <title>Ứng dụng Ôn tập Cuối kì 2 - Lớp 4</title>
     
-    <!-- Tải các thư viện cần thiết (Chỉ cần mạng trong lần tải đầu tiên, sau đó trình duyệt sẽ lưu vào bộ nhớ tạm) -->
+    <!-- Tải các thư viện cần thiết -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-blue-50">
+<body class="bg-gray-50">
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         // Các biểu tượng (Icons)
         const CheckCircle2 = ({ size = 24, className = "" }) => (
@@ -36,105 +36,523 @@
         const RefreshCw = ({ size = 24, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
         );
+        const Globe = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        );
+        const Microscope = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+        );
+        const Calculator = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
+        );
+        const BookMarked = ({ size = 24, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path><polyline points="10 2 10 10 13 7 16 10 16 2"></polyline></svg>
+        );
 
-        const quizData = {
-          tracNghiem: [
-            {
-              id: 'q1',
-              question: 'Câu 1. Đặc điểm khí hậu của vùng Bắc Trung Bộ và Nam Trung Bộ là:',
-              options: {
-                A: 'Mát mẻ và ẩm ướt quanh năm',
-                B: 'Nóng và khô hạn',
-                C: 'Lạnh và mùa đông kéo dài',
-                D: 'Nóng và mưa nhiều vào mùa thu, mùa đông'
-              },
-              correct: 'D',
-              score: 0.5
-            },
-            {
-              id: 'q2',
-              question: 'Câu 2. Khí hậu ở Nam Bộ được chia thành mấy mùa?',
-              options: {
-                A: '1 mùa',
-                B: '2 mùa',
-                C: '3 mùa',
-                D: '4 mùa'
-              },
-              correct: 'B',
-              score: 0.5
-            },
-            {
-              id: 'q3',
-              question: 'Câu 3. Phần lớn dân cư vùng Bắc Trung Bộ và Nam Trung Bộ phân bố ở đâu?',
-              options: {
-                A: 'Miền núi',
-                B: 'Trung tâm thành phố',
-                C: 'Đồng bằng và ven biển',
-                D: 'Cả đồng bằng và miền núi'
-              },
-              correct: 'C',
-              score: 1.0
-            },
-            {
-              id: 'q5',
-              question: 'Câu 5. Thành phố Hồ Chí Minh còn có tên gọi khác là:',
-              options: {
-                A: 'Hà Nội',
-                B: 'Đà Nẵng',
-                C: 'Bình Dương',
-                D: 'Sài Gòn'
-              },
-              correct: 'D',
-              score: 1.0
-            },
-            {
-              id: 'q6',
-              question: 'Câu 6. Nét văn hóa của người dân Nam Bộ là:',
-              options: {
-                A: 'Chợ đêm',
-                B: 'Chợ truyền thống',
-                C: 'Chợ phiên',
-                D: 'Chợ nổi'
-              },
-              correct: 'D',
-              score: 1.0
-            }
-          ],
-          tuLuan: [
-            {
-              id: 'tl1',
-              question: 'Câu 1 (1 điểm). Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển ngành nghề nào?',
-              hint: 'Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển nông nghiệp.'
-            },
-            {
-              id: 'tl2',
-              question: 'Câu 2 (1 điểm). Theo em, Địa đạo Củ Chi có ý nghĩa lịch sử như thế nào?',
-              hint: 'Địa đạo Củ Chi thể hiện ý chí kiên cường, trí thông minh, niềm tự hào của người dân Củ Chi, là biểu tượng của chủ nghĩa anh hùng cách mạng của dân tộc Việt Nam.'
-            },
-            {
-              id: 'tl3',
-              question: 'Câu 3 (1 điểm). Theo em, điều gì thu hút khách du lịch đến phố cổ Hội An?',
-              hint: 'Lí do Phố cổ Hội An thu hút khách du lịch là:\n- Nhiều sản phẩm du lịch độc đáo.\n- Hoạt động văn hóa truyền thống đặc sắc.\n- Cảnh quan thiên nhiên đẹp, đa dạng, con người chan hòa, thân thiện.'
-            },
-            {
-              id: 'tl4',
-              question: 'Câu 4 (1 điểm). Em cần có những biện pháp như thế nào để bảo tồn và giữ gìn giá trị Cố đô Huế?',
-              hint: 'Một số biện pháp để bảo tồn, giữ gìn giá trị Cố đô Huế như:\n- Tu bổ các di tích thường xuyên.\n- Tuyên truyền ý thức khách du lịch về việc bảo tồn, giữ gìn các di tích.'
-            }
-          ]
+        // --- CÁC COMPONENT ĐẶC TRƯNG ---
+        
+        // Trình bày phân số chuẩn
+        const Frac = ({ n, d }) => (
+            <span className="inline-flex flex-col items-center justify-center align-middle mx-1 font-bold text-emerald-800" style={{ fontSize: '1em', lineHeight: '1.2' }}>
+                <span className="border-b-[2.5px] border-emerald-800 px-1 w-full text-center pb-0.5">{n}</span>
+                <span className="px-1 w-full text-center pt-0.5">{d}</span>
+            </span>
+        );
+        
+        // Ô nhập liệu trên cùng 1 dòng
+        const InlineFillInput = ({ value, onChange, disabled, className = "w-20", colorTheme = "emerald" }) => {
+            const themeMap = {
+                emerald: "border-emerald-500 focus:border-emerald-600 bg-emerald-50 focus:bg-emerald-100 text-emerald-900 border-emerald-300",
+                rose: "border-rose-500 focus:border-rose-600 bg-rose-50 focus:bg-rose-100 text-rose-900 border-rose-300",
+            };
+            const colors = themeMap[colorTheme] || themeMap.emerald;
+            const disabledClass = disabled ? `opacity-70 cursor-not-allowed bg-transparent ${colors.split(' ')[4]}` : '';
+
+            return (
+                <input 
+                    type="text" 
+                    value={value || ''} 
+                    onChange={(e) => onChange(e.target.value)} 
+                    disabled={disabled}
+                    className={`h-10 px-2 text-center border-b-2 border-dashed focus:border-solid outline-none font-bold text-xl transition-all ${colors} ${disabledClass} ${className}`}
+                />
+            );
         };
 
+        // Ô vuông nhỏ điền dấu
+        const InlineSignInput = ({ value, onChange, disabled }) => (
+            <input 
+                type="text" 
+                value={value || ''} 
+                onChange={(e) => onChange(e.target.value)} 
+                disabled={disabled}
+                className={`w-12 h-12 text-center border-2 border-emerald-400 rounded-lg focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 text-emerald-900 font-bold text-2xl transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`}
+            />
+        );
+
+        // Giao diện ô nhập phân số nền tối
+        const MathDarkInput = ({ value, onChange, disabled }) => (
+            <input 
+                type="text" 
+                value={value || ''} 
+                onChange={(e) => onChange(e.target.value)} 
+                disabled={disabled}
+                className={`w-12 h-12 md:w-16 md:h-14 text-center bg-[#2a3449] border-2 border-[#3b4b68] rounded-lg font-bold text-xl text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
+            />
+        );
+
+        // UI Cộng/Trừ phân số
+        const FractionAddDark = ({ prefix, op, answers, onChange, submitted }) => (
+            <div className="flex items-center gap-2 md:gap-4 shrink-0 bg-[#151c2c] p-4 md:p-6 rounded-xl font-sans">
+                <div className="flex flex-col gap-2 items-center">
+                    <MathDarkInput value={answers[prefix+'n1']} onChange={(v) => onChange(prefix+'n1', v)} disabled={submitted} />
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <MathDarkInput value={answers[prefix+'d1']} onChange={(v) => onChange(prefix+'d1', v)} disabled={submitted} />
+                </div>
+                <span className="text-2xl font-bold text-white mx-1">{op}</span>
+                <div className="flex flex-col gap-2 items-center">
+                    <MathDarkInput value={answers[prefix+'n2']} onChange={(v) => onChange(prefix+'n2', v)} disabled={submitted} />
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <MathDarkInput value={answers[prefix+'d2']} onChange={(v) => onChange(prefix+'d2', v)} disabled={submitted} />
+                </div>
+                <span className="text-3xl font-bold text-blue-400 mx-1">=</span>
+                <div className="flex flex-col gap-2 items-center">
+                    <div className="flex items-center gap-2">
+                        <MathDarkInput value={answers[prefix+'n3']} onChange={(v) => onChange(prefix+'n3', v)} disabled={submitted} />
+                        <span className="text-2xl font-bold text-blue-400">{op}</span>
+                        <MathDarkInput value={answers[prefix+'n4']} onChange={(v) => onChange(prefix+'n4', v)} disabled={submitted} />
+                    </div>
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <input type="text" value={answers[prefix+'d3'] || ''} onChange={(e) => onChange(prefix+'d3', e.target.value)} disabled={submitted}
+                        className={`w-28 h-12 md:w-32 md:h-14 text-center bg-[#2a3449] border-2 border-[#3b4b68] rounded-lg font-bold text-xl text-white focus:border-blue-400 outline-none ${submitted ? 'opacity-70 cursor-not-allowed' : ''}`} />
+                </div>
+                <span className="text-3xl font-bold text-blue-400 mx-1">=</span>
+                <div className="flex flex-col gap-2 items-center">
+                    <MathDarkInput value={answers[prefix+'n5']} onChange={(v) => onChange(prefix+'n5', v)} disabled={submitted} />
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <MathDarkInput value={answers[prefix+'d5']} onChange={(v) => onChange(prefix+'d5', v)} disabled={submitted} />
+                </div>
+            </div>
+        );
+
+        // UI Rút gọn phân số (hoặc quy đồng)
+        const FractionSimplifyDark = ({ prefix, op, answers, onChange, submitted }) => (
+            <div className="flex items-center gap-3 md:gap-5 shrink-0 bg-[#151c2c] p-4 md:p-6 rounded-xl font-sans">
+                <div className="flex flex-col gap-2 items-center">
+                    <div className="flex items-center gap-2 text-slate-400 text-2xl">
+                        <span>(</span>
+                        <MathDarkInput value={answers[prefix+'n1']} onChange={(v) => onChange(prefix+'n1', v)} disabled={submitted} />
+                        <span className="font-bold text-slate-300 text-xl">{op}</span>
+                        <MathDarkInput value={answers[prefix+'n2']} onChange={(v) => onChange(prefix+'n2', v)} disabled={submitted} />
+                        <span>)</span>
+                    </div>
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <div className="flex items-center gap-2 text-slate-400 text-2xl">
+                        <span>(</span>
+                        <MathDarkInput value={answers[prefix+'d1']} onChange={(v) => onChange(prefix+'d1', v)} disabled={submitted} />
+                        <span className="font-bold text-slate-300 text-xl">{op}</span>
+                        <MathDarkInput value={answers[prefix+'d2']} onChange={(v) => onChange(prefix+'d2', v)} disabled={submitted} />
+                        <span>)</span>
+                    </div>
+                </div>
+                <span className="text-3xl font-bold text-blue-400 mx-2">=</span>
+                <div className="flex flex-col gap-2 items-center">
+                    <MathDarkInput value={answers[prefix+'n3']} onChange={(v) => onChange(prefix+'n3', v)} disabled={submitted} />
+                    <div className="w-full h-1 bg-white rounded-full"></div>
+                    <MathDarkInput value={answers[prefix+'d3']} onChange={(v) => onChange(prefix+'d3', v)} disabled={submitted} />
+                </div>
+            </div>
+        );
+
+        // Hình Toán
+        const MathSvgQ1 = () => (
+            <svg width="100%" height="auto" viewBox="0 0 320 200" className="max-w-md mx-auto bg-white border border-gray-300 rounded-lg shadow-sm">
+                <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" strokeWidth="1"/></pattern></defs>
+                <rect width="320" height="200" fill="url(#grid)" />
+                <polyline points="40,40 200,40" fill="none" stroke="#1f2937" strokeWidth="3" />
+                <polyline points="40,40 80,120" fill="none" stroke="#1f2937" strokeWidth="3" />
+                <circle cx="40" cy="40" r="5" fill="#111827" /><text x="25" y="30" fontSize="18" fontWeight="bold">A</text>
+                <circle cx="200" cy="40" r="5" fill="#111827" /><text x="210" y="30" fontSize="18" fontWeight="bold">B</text>
+                <circle cx="80" cy="120" r="5" fill="#111827" /><text x="60" y="140" fontSize="18" fontWeight="bold">D</text>
+                <circle cx="120" cy="120" r="5" fill="#ef4444" /><text x="115" y="105" fontSize="18" fontWeight="bold" fill="#ef4444">1</text>
+                <circle cx="160" cy="120" r="5" fill="#ef4444" /><text x="155" y="105" fontSize="18" fontWeight="bold" fill="#ef4444">2</text>
+                <circle cx="200" cy="120" r="5" fill="#ef4444" /><text x="195" y="105" fontSize="18" fontWeight="bold" fill="#ef4444">3</text>
+                <circle cx="240" cy="120" r="5" fill="#ef4444" /><text x="235" y="105" fontSize="18" fontWeight="bold" fill="#ef4444">4</text>
+                <line x1="80" y1="120" x2="280" y2="120" stroke="#9ca3af" strokeWidth="2" strokeDasharray="5 5" />
+            </svg>
+        );
+
+        const MathSvgQ2 = () => (
+            <svg width="100%" height="auto" viewBox="0 0 320 220" className="max-w-md mx-auto bg-white border border-gray-300 rounded-lg shadow-sm font-sans my-4">
+                <line x1="40" y1="180" x2="300" y2="180" stroke="#6b7280" strokeWidth="2" />
+                <line x1="40" y1="20" x2="40" y2="180" stroke="#6b7280" strokeWidth="2" />
+                <text x="20" y="185" fontSize="14" fontWeight="bold" fill="#4b5563">0</text>
+                <line x1="40" y1="100" x2="300" y2="100" stroke="#e5e7eb" strokeWidth="1" />
+                <text x="20" y="105" fontSize="14" fontWeight="bold" fill="#4b5563">1</text>
+                <line x1="40" y1="20" x2="300" y2="20" stroke="#e5e7eb" strokeWidth="1" />
+                <text x="20" y="25" fontSize="14" fontWeight="bold" fill="#4b5563">2</text>
+                <text x="15" y="12" fontSize="12" fontStyle="italic" fill="#4b5563">(l)</text>
+                <rect x="60" y="68" width="30" height="112" fill="#facc15" rx="2" />
+                <text x="75" y="200" fontSize="14" fontWeight="bold" textAnchor="middle" fill="#4b5563">An</text>
+                <rect x="120" y="52" width="30" height="128" fill="#facc15" rx="2" />
+                <text x="135" y="200" fontSize="14" fontWeight="bold" textAnchor="middle" fill="#4b5563">Tú</text>
+                <rect x="180" y="84" width="30" height="96" fill="#facc15" rx="2" />
+                <text x="195" y="200" fontSize="14" fontWeight="bold" textAnchor="middle" fill="#4b5563">Lê</text>
+                <rect x="240" y="36" width="30" height="144" fill="#facc15" rx="2" />
+                <text x="255" y="200" fontSize="14" fontWeight="bold" textAnchor="middle" fill="#4b5563">Hà</text>
+                <text x="170" y="215" fontSize="12" fontStyle="italic" textAnchor="middle" fill="#4b5563">(bạn)</text>
+            </svg>
+        );
+
+        const MathSvgQ3 = () => (
+            <svg width="100%" height="auto" viewBox="0 0 240 120" className="max-w-xs mx-auto bg-white border border-gray-300 rounded-lg shadow-sm p-4 my-4">
+                <g stroke="#1f2937" strokeWidth="2">
+                    <rect x="20" y="20" width="50" height="40" fill="#3b82f6" /><rect x="70" y="20" width="50" height="40" fill="#3b82f6" />
+                    <rect x="120" y="20" width="50" height="40" fill="#3b82f6" /><rect x="170" y="20" width="50" height="40" fill="#ffffff" />
+                    <rect x="20" y="60" width="50" height="40" fill="#ffffff" /><rect x="70" y="60" width="50" height="40" fill="#ffffff" />
+                    <rect x="120" y="60" width="50" height="40" fill="#ffffff" /><rect x="170" y="60" width="50" height="40" fill="#ffffff" />
+                </g>
+            </svg>
+        );
+
+        // --- DỮ LIỆU ĐỀ THI TỔNG HỢP ---
         const q4Options = ["qua đời", "vật chất", "trưởng thành", "tinh thần", "sinh ra"];
-        const q4Answers = {
-          q4_1: "tinh thần",
-          q4_2: "sinh ra",
-          q4_3: "trưởng thành"
+        const q4Answers = { q4_1: "tinh thần", q4_2: "sinh ra", q4_3: "trưởng thành" };
+        const khoaHocAnswers = { step1: "Lựa chọn chi tiết và dụng cụ", step2: "Lắp ghép chân cầu", step3: "Lắp ghép mặt cầu và thành cầu", step4: "Lắp ghép hoàn chỉnh và kiểm tra mô hình" };
+
+        const quizData = {
+          lichSu: {
+            title: "Lịch sử - Địa lí lớp 4",
+            theme: "blue", maxScoreTN: 6.0, maxScoreTL: 4.0,
+            tracNghiem: [
+              { id: 'ls_q1', question: 'Câu 1. Đặc điểm khí hậu của vùng Bắc Trung Bộ và Nam Trung Bộ là:', options: { A: 'Mát mẻ và ẩm ướt quanh năm', B: 'Nóng và khô hạn', C: 'Lạnh và mùa đông kéo dài', D: 'Nóng và mưa nhiều vào mùa thu, mùa đông' }, correct: 'D', score: 0.5 },
+              { id: 'ls_q2', question: 'Câu 2. Khí hậu ở Nam Bộ được chia thành mấy mùa?', options: { A: '1 mùa', B: '2 mùa', C: '3 mùa', D: '4 mùa' }, correct: 'B', score: 0.5 },
+              { id: 'ls_q3', question: 'Câu 3. Phần lớn dân cư vùng Bắc Trung Bộ và Nam Trung Bộ phân bố ở đâu?', options: { A: 'Miền núi', B: 'Trung tâm thành phố', C: 'Đồng bằng và ven biển', D: 'Cả đồng bằng và miền núi' }, correct: 'C', score: 1.0 },
+              { id: 'q4_special', type: 'dien_khuyet' },
+              { id: 'ls_q5', question: 'Câu 5. Thành phố Hồ Chí Minh còn có tên gọi khác là:', options: { A: 'Hà Nội', B: 'Đà Nẵng', C: 'Bình Dương', D: 'Sài Gòn' }, correct: 'D', score: 1.0 },
+              { id: 'ls_q6', question: 'Câu 6. Nét văn hóa của người dân Nam Bộ là:', options: { A: 'Chợ đêm', B: 'Chợ truyền thống', C: 'Chợ phiên', D: 'Chợ nổi' }, correct: 'D', score: 1.0 }
+            ],
+            tuLuan: [
+              { id: 'ls_tl1', question: 'Câu 1 (1 điểm). Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển ngành nghề nào?', hint: 'Vùng Nam Bộ có điều kiện tự nhiên thuận lợi để phát triển nông nghiệp.' },
+              { id: 'ls_tl2', question: 'Câu 2 (1 điểm). Theo em, Địa đạo Củ Chi có ý nghĩa lịch sử như thế nào?', hint: 'Địa đạo Củ Chi thể hiện ý chí kiên cường, trí thông minh, niềm tự hào của người dân Củ Chi, là biểu tượng của chủ nghĩa anh hùng cách mạng của dân tộc Việt Nam.' },
+              { id: 'ls_tl3', question: 'Câu 3 (1 điểm). Theo em, điều gì thu hút khách du lịch đến phố cổ Hội An?', hint: 'Lí do Phố cổ Hội An thu hút khách du lịch là:\n- Nhiều sản phẩm du lịch độc đáo.\n- Hoạt động văn hóa truyền thống đặc sắc.\n- Cảnh quan thiên nhiên đẹp, đa dạng, con người chan hòa, thân thiện.' },
+              { id: 'ls_tl4', question: 'Câu 4 (1 điểm). Em cần có những biện pháp như thế nào để bảo tồn và giữ gìn giá trị Cố đô Huế?', hint: 'Một số biện pháp để bảo tồn, giữ gìn giá trị Cố đô Huế như:\n- Tu bổ các di tích thường xuyên.\n- Tuyên truyền ý thức khách du lịch về việc bảo tồn, giữ gìn các di tích.' }
+            ]
+          },
+          khoaHoc: {
+            title: "Công nghệ (Khoa học) lớp 4",
+            theme: "indigo", maxScoreTN: 5.0, maxScoreTL: 5.0,
+            matchingOptions: [ "Lắp ghép hoàn chỉnh và kiểm tra mô hình", "Lắp ghép chân cầu", "Lựa chọn chi tiết và dụng cụ", "Lắp ghép mặt cầu và thành cầu" ],
+            tracNghiem: [
+              { id: 'kh_q1', question: 'Câu 1 (0.5đ). Lá cây sẽ chuyển sang màu gì nếu thiếu ánh sáng?', options: { A: 'Lá cây chuyển sang màu đỏ', B: 'Lá cây chuyển sang màu vàng úa', C: 'Lá cây chuyển sang màu xanh', D: 'Lá cây chuyển sang màu hồng' }, correct: 'B', score: 0.5 },
+              { id: 'kh_q2', question: 'Câu 2 (0.5đ). Có mấy bước để thực hiện lắp ghép mô hình kĩ thuật?', options: { A: '1', B: '2', C: '3', D: '4' }, correct: 'D', score: 0.5 },
+              { id: 'kh_q3', question: 'Câu 3 (1đ). Đèn ông sao thường xuất hiện trong dịp nào?', options: { A: 'Tết Trung thu', B: 'Tết Nguyên Đán', C: 'Tết ông Công, ông Táo', D: 'Tết Đoan Ngọ' }, correct: 'A', score: 1.0 },
+              { id: 'kh_q4', question: 'Câu 4 (1đ). Ai có thể làm ra diều giấy?', options: { A: 'Các nghệ nhân', B: 'Tất cả mọi người đều làm được', C: 'Bác lao công', D: 'Người lớn' }, correct: 'B', score: 1.0 },
+              { id: 'kh_q5_special', type: 'noi_buoc' }
+            ],
+            tuLuan: [
+              { id: 'kh_tl1', question: 'Câu 1 (1 điểm). Theo em tiêu chí lắp ghép mô hình kĩ thuật là gì?', hint: '- Đầy đủ các bộ phận.\n- Mối ghép chắc chắn đúng vị trí.' },
+              { id: 'kh_tl2', question: 'Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật:\na) Tua-vít\nb) Cờ-lê', hint: 'a) Tua-vít: Có tác dụng để vặn vít.\nb) Cờ-lê: Có tác dụng để giữ ốc.' },
+              { id: 'kh_tl3', question: 'Câu 3 (1 điểm). Kể tên 2 đồ chơi dân gian mà em biết.', hint: 'Ví dụ: Tò he, Đèn ông sao, Diều giấy, Chong chóng...' },
+              { id: 'kh_tl4', question: 'Câu 4 (2 điểm). Các bộ phận chính của diều giấy là gì?', hint: 'Các bộ phận chính của diều giấy là:\n- Thân diều\n- Cánh diều\n- Đuôi diều ngắn\n- Đuôi diều dài\n- Dây diều' }
+            ]
+          },
+          toan: {
+            title: "Toán lớp 4",
+            theme: "emerald", maxScoreTN: 3.0, maxScoreTL: 7.0,
+            tracNghiem: [
+              { id: 't_q1', question: 'Câu 1 (0.5đ). Cho hình sau:', customContent: <MathSvgQ1 />, questionText2: 'Để vẽ được hình bình hành ABCD thì ta xác định điểm C sẽ nằm ở vị trí số:', options: { A: '1', B: '2', C: '3', D: '4' }, correct: 'D', score: 0.5 },
+              { id: 't_q2', question: 'Câu 2 (0.5đ). Quan sát biểu đồ bên dưới, phân số biểu thị lượng nước uống của An trong một ngày là:', customContent: <MathSvgQ2 />, options: { A: <Frac n="7" d="5" />, B: <Frac n="6" d="5" />, C: <Frac n="8" d="5" />, D: <Frac n="9" d="5" /> }, correct: 'A', score: 0.5 },
+              { id: 't_q3', question: 'Câu 3 (1đ). Quan sát hình bên dưới, phân số chỉ số phần đã tô màu là:', customContent: <MathSvgQ3 />, options: { A: <Frac n="1" d="8" />, B: <Frac n="3" d="8" />, C: <Frac n="5" d="8" />, D: <Frac n="11" d="49" /> }, correct: 'B', score: 1.0 },
+              { id: 't_q4', question: <div>Câu 4 (1đ). Viết phân số <Frac n="11" d="49"/> dưới dạng thương của hai số tự nhiên là:</div>, options: { A: '49 : 11', B: '1 : 49', C: '11 : 49', D: '49 : 1' }, correct: 'C', score: 1.0 }
+            ],
+            tuLuan: [
+              { id: 't_tl1', question: <div>Câu 1 (1 điểm). Tính:</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4">
+                        <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 min-w-max">
+                            <div className="font-bold text-xl text-slate-700 flex items-center gap-3"><span>a)</span> <Frac n="1" d="2"/> <span>+</span> <Frac n="1" d="3"/> <span className="text-emerald-600">=</span></div>
+                            <div className="overflow-x-auto pb-4 max-w-full"><FractionAddDark prefix="t_tl1a_" op="+" answers={answers} onChange={onChange} submitted={submitted} /></div>
+                        </div>
+                        <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 min-w-max">
+                            <div className="font-bold text-xl text-slate-700 flex items-center gap-3"><span>b)</span> <Frac n="1" d="4"/> <span>-</span> <Frac n="3" d="16"/> <span className="text-emerald-600">=</span></div>
+                            <div className="overflow-x-auto pb-4 max-w-full"><FractionAddDark prefix="t_tl1b_" op="-" answers={answers} onChange={onChange} submitted={submitted} /></div>
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) <Frac n="1" d="2"/> + <Frac n="1" d="3"/> = <Frac n="3" d="6"/> + <Frac n="2" d="6"/> = <Frac n="5" d="6"/><br/><br/>b) <Frac n="1" d="4"/> - <Frac n="3" d="16"/> = <Frac n="4" d="16"/> - <Frac n="3" d="16"/> = <Frac n="1" d="16"/></div> 
+              },
+              { id: 't_tl2', question: <div>Câu 2 (1 điểm). Rút gọn các phân số sau thành phân số tối giản:</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4">
+                        <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 min-w-max">
+                            <div className="font-bold text-xl text-slate-700 flex items-center gap-3"><span>a)</span> <Frac n="25" d="45"/> <span className="text-emerald-600">=</span></div>
+                            <div className="overflow-x-auto pb-4 max-w-full"><FractionSimplifyDark prefix="t_tl2a_" op=":" answers={answers} onChange={onChange} submitted={submitted} /></div>
+                        </div>
+                        <div className="flex flex-col xl:flex-row xl:items-center gap-4 xl:gap-6 min-w-max">
+                            <div className="font-bold text-xl text-slate-700 flex items-center gap-3"><span>b)</span> <Frac n="20" d="50"/> <span className="text-emerald-600">=</span></div>
+                            <div className="overflow-x-auto pb-4 max-w-full"><FractionSimplifyDark prefix="t_tl2b_" op=":" answers={answers} onChange={onChange} submitted={submitted} /></div>
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) <Frac n="25" d="45"/> = <Frac n="25 : 5" d="45 : 5"/> = <Frac n="5" d="9"/><br/><br/>b) <Frac n="20" d="50"/> = <Frac n="20 : 10" d="50 : 10"/> = <Frac n="2" d="5"/></div> 
+              },
+              { id: 't_tl3', question: <div>Câu 3 (1 điểm). Số?</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4 text-lg text-slate-800 font-medium">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span>a) Mẫu số chung của hai phân số</span> <Frac n="3" d="5"/> <span>và</span> <Frac n="5" d="10"/> <span>là:</span>
+                            <InlineFillInput colorTheme="emerald" className="w-20" value={answers['t_tl3a']} onChange={v => onChange('t_tl3a', v)} disabled={submitted} />
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span>b) Mẫu số chung của hai phân số</span> <Frac n="6" d="14"/> <span>và</span> <Frac n="2" d="7"/> <span>là:</span>
+                            <InlineFillInput colorTheme="emerald" className="w-20" value={answers['t_tl3b']} onChange={v => onChange('t_tl3b', v)} disabled={submitted} />
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) 10<br/><br/>b) 14</div> 
+              },
+              { id: 't_tl4', question: <div>Câu 4 (1 điểm). Số?</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4 text-lg text-slate-800 font-medium">
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span>a) 27 mm² + 23 mm² =</span>
+                            <InlineFillInput colorTheme="emerald" className="w-24" value={answers['t_tl4a']} onChange={v => onChange('t_tl4a', v)} disabled={submitted} /><span>mm²</span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-3">
+                            <span>b) 200 mm² : 5 =</span>
+                            <InlineFillInput colorTheme="emerald" className="w-24" value={answers['t_tl4b']} onChange={v => onChange('t_tl4b', v)} disabled={submitted} /><span>mm²</span>
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) 50 mm²<br/><br/>b) 40 mm²</div> 
+              },
+              { id: 't_tl5', question: <div>Câu 5 (1 điểm). Điền dấu &gt; , &lt; , =</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="space-y-6 mt-4 text-lg text-slate-800 font-medium">
+                        <div className="flex flex-wrap items-center gap-4">
+                            <span>a)</span> <Frac n="6" d="6"/> <InlineSignInput value={answers['t_tl5a']} onChange={v => onChange('t_tl5a', v)} disabled={submitted} /> <span>1</span>
+                        </div>
+                        <div className="flex flex-wrap items-center gap-4">
+                            <span>b)</span> <Frac n="2" d="5"/> <InlineSignInput value={answers['t_tl5b']} onChange={v => onChange('t_tl5b', v)} disabled={submitted} /> <Frac n="3" d="5"/>
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) <Frac n="6" d="6"/> = 1<br/><br/>b) <Frac n="2" d="5"/> &lt; <Frac n="3" d="5"/></div> 
+              },
+              { id: 't_tl6', question: <div>Câu 6 (1 điểm). Có hai túi đậu đen. Túi thứ nhất cân nặng <Frac n="3" d="5"/> kg. Túi thứ hai nặng hơn túi thứ nhất <Frac n="2" d="5"/> kg. Hỏi cả hai túi cân nặng bao nhiêu ki-lô-gam?</div>, hint: <div><b>Bài giải:</b><br/>Số ki-lô-gam túi đậu đen thứ hai cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="2" d="5"/> = <Frac n="5" d="5"/> (kg)<br/>Số ki-lô-gam cả hai túi đậu đen cân nặng là:<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<Frac n="3" d="5"/> + <Frac n="5" d="5"/> = <Frac n="8" d="5"/> (kg)<br/><b>Đáp số:</b> <Frac n="8" d="5"/> ki-lô-gam.</div> },
+              { id: 't_tl7', question: <div>Câu 7 (1 điểm). Vẽ một hình thoi có cạnh dài 3 cm và đặt tên cho hình thoi đó.</div>, hint: <div>Bé hãy dùng thước kẻ và bút chì để vẽ ra nháp một hình thoi (có 4 cạnh bằng nhau, mỗi cạnh dài 3cm) và đặt tên 4 đỉnh nhé (Ví dụ: ABCD).</div> }
+            ]
+          },
+          tiengViet: {
+            title: "Tiếng Việt lớp 4",
+            theme: "rose", maxScoreTN: 3.0, maxScoreTL: 15.0,
+            readingTitle: "MỘT SÁNG THU XƯA",
+            readingAuthor: "Đoàn Minh Tuấn",
+            readingText: `Sáng hôm ấy, nắng nhuộm vàng mái đền cổ kính, Bác Hồ đã đến thăm đền Hùng và gặp các chiến sĩ đại đoàn Quân Tiên Phong đang đóng ở đây.
+Bác nhìn khắp lượt các chiến sĩ ra đón rồi hỏi:
+– Các chú có khỏe không?
+– Thưa Bác khỏe ạ!
+Mọi người hồi hộp chờ Bác nói chuyện thì lại nghe Bác hỏi:
+– Các chú có biết đền thờ ai đây không?
+Một chiến sĩ đứng gần thưa với Bác:
+– Đền thờ một ông vua ạ!
+– Nhưng vua nào? Bác mỉm cười trìu mến nhìn bộ đội.
+Một cán bộ trả lời:
+– Dạ, vua Hùng!
+– Thế các chú có biết vua Hùng là ông vua như thế nào không?
+Tất cả đều lặng im. Bác giải thích:
+– Vua Hùng là ông vua có công dựng nước, chính là ông Tổ của nước Việt Nam ta.
+Rồi Bác ân cần dặn mọi người: “Các Vua Hùng đã có công dựng nước, bác cháu ta phải cùng nhau giữ lấy nước”.
+Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi trong lòng mọi người.`,
+            tracNghiem: [
+              { id: 'tv_q1', question: 'Câu 1 (0.5đ). Ai đã đến thăm đền Hùng và gặp các chiến sĩ đại đoàn Quân Tiên Phong?', options: { A: 'Vua Hùng', B: 'Bác Hồ', C: 'Chú lính', D: 'Người dân' }, correct: 'B', score: 0.5 },
+              { id: 'tv_q2', question: 'Câu 2 (0.5đ). Điều đầu tiên các chiến sĩ được hỏi là về:', options: { A: 'Công việc', B: 'Tiền bạc', C: 'Sức khỏe', D: 'Gia đình' }, correct: 'C', score: 0.5 },
+              { id: 'tv_q3', question: 'Câu 3 (0.5đ). Vị vua nào trong đền thờ?', options: { A: 'Sơn Tinh', B: 'Thủy Tinh', C: 'Vua Hán', D: 'Vua Hùng' }, correct: 'D', score: 0.5 },
+              { id: 'tv_q4', question: 'Câu 4 (0.5đ). Mọi người được ân cần dặn điều gì?', options: { A: '“Lời nói chẳng mất tiền mua, lựa lời mà nói cho vừa lòng nhau.”', B: '“Bầu ơi thương lấy bí cùng, tuy rằng khác giống nhưng chung một giàn.”', C: '“Các Vua Hùng đã có công dựng nước, bác cháu ta phải cùng nhau giữ lấy nước.”', D: '“Khôn ngoan đối đáp người ngoài, gà cùng một mẹ chớ hoài đá nhau.”' }, correct: 'C', score: 0.5 },
+              { id: 'tv_q8', question: 'Câu 8 (0.5đ). Cho câu: “Chuỗi địa điểm du lịch Long Hải – Bình Châu – La Gi – Mũi Né rất nổi tiếng và được ưa chuộng.”. Dấu gạch ngang trong câu trên có tác dụng:', options: { A: 'Đánh dấu các ý liệt kê.', B: 'Đánh dấu tên của một tài liệu.', C: 'Đánh dấu tên một bài hát.', D: 'Nối các từ ngữ trong một liên danh.' }, correct: 'D', score: 0.5 },
+              { id: 'tv_q9', question: 'Câu 9 (0.5đ). Có tác dụng để đánh dấu phần chú thích là dấu:', options: { A: 'ngoặc kép', B: 'ngoặc đơn', C: 'gạch ngang', D: 'chấm than' }, correct: 'B', score: 0.5 }
+            ],
+            tuLuan: [
+              { id: 'tv_tl5', question: <div>Câu 5 (1 điểm). Trong câu: “Sáng hôm ấy, nắng nhuộm vàng mái đền cổ kính...”. Động từ là:</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="mt-4 flex items-center gap-3 text-lg font-medium text-slate-800">
+                        <span>Động từ là:</span>
+                        <InlineFillInput colorTheme="rose" className="w-32 md:w-48" value={answers['tv_tl5']} onChange={v => onChange('tv_tl5', v)} disabled={submitted} />
+                    </div>
+                ),
+                hint: <div><b>Đáp án:</b> nhuộm</div> 
+              },
+              { id: 'tv_tl6', question: 'Câu 6 (1 điểm). Lời dặn dò của Bác có ý nghĩa gì?', hint: 'Thế hệ con cháu phải có trách nhiệm bảo vệ, gìn giữ và xây dựng đất nước để xứng đáng với công lao dựng nước của các vua Hùng.' },
+              { id: 'tv_tl7', question: 'Câu 7 (1 điểm). Qua bài “Một sáng thu xưa”, em cần phải làm gì để thể hiện sự biết ơn của bản thân đối với công lao của ông cha ta ngày xưa.', hint: 'Qua bài đọc, em thấy mình cần cố gắng học hành để góp phần nhỏ xây dựng đất nước phát triển hơn.' },
+              { id: 'tv_tl10', question: <div>Câu 10 (1 điểm). Cho câu: “Chiều chiều, lũ trẻ thả diều trên cánh đồng.”. Tìm và viết lại trạng ngữ của câu trên.</div>, 
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="mt-4 flex items-center gap-3 text-lg font-medium text-slate-800">
+                        <span>Trạng ngữ là:</span>
+                        <InlineFillInput colorTheme="rose" className="w-32 md:w-48" value={answers['tv_tl10']} onChange={v => onChange('tv_tl10', v)} disabled={submitted} />
+                    </div>
+                ),
+                hint: <div><b>Đáp án:</b> Chiều chiều</div> 
+              },
+              { id: 'tv_tl11', question: 'Câu 11 (1 điểm). Đặt một câu trong đó có sử dụng từ ngữ tả cảnh núi non hoặc sông nước.', hint: 'Ví dụ: Con sông quê hương uốn lượn như một con rắn khổng lồ.' },
+              { id: 'tv_tlv', question: <div><b>III. TẬP LÀM VĂN: (10 điểm)</b><br/><br/><b>Đề bài:</b> Viết bài văn tả một con vật hoặc loài vật mà em yêu thích.</div>, hint: <div><b>Hướng dẫn dàn ý:</b><br/>- Mở bài: Giới thiệu con vật hoặc loài vật.<br/>- Thân bài:<br/>&nbsp;&nbsp;+ Tả đặc điểm nổi bật về hình dáng.<br/>&nbsp;&nbsp;+ Tả hoạt động hoặc thói quen.<br/>&nbsp;&nbsp;+ Nêu cách chăm sóc và bảo vệ con vật, loài vật.<br/>- Kết bài: Nêu suy nghĩ, tình cảm, sự gắn bó... với con vật hoặc loài vật.<br/><br/><b>Bài văn tham khảo (Tả con mèo):</b><br/>Nhà em có nuôi một con mèo rất đáng yêu, em đặt tên cho nó là Miu Miu.<br/><br/>Miu Miu có thân hình nhỏ nhắn, xinh xắn như một cục bông di động. Bộ lông của nó mềm mại và mượt mà. Đôi mắt của Miu Miu tròn xoe, long lanh như hai hòn bi ve. Cái mũi hồng hồng, lúc nào cũng ươn ướt, trông rất đáng yêu. Hai cái tai nhỏ luôn dựng đứng, chỉ cần có tiếng động nhẹ là tai nó đã khẽ động đậy như đang lắng nghe. Cái đuôi dài và mềm mại của Miu Miu thường phe phẩy qua lại, giống như một chiếc roi nhỏ đang vui đùa. Bốn chân của nó nhỏ nhưng rất nhanh nhẹn, giúp nó chạy nhảy thoăn thoắt khắp sân nhà. Mỗi bước đi của Miu Miu đều nhẹ nhàng như không chạm đất. Miu Miu rất thông minh và tinh nghịch. Nó đặc biệt giỏi bắt chuột. Mỗi khi phát hiện có chuột, nó lập tức nằm im rình rập, đôi mắt chăm chú không rời. Chỉ cần con chuột sơ hở, Miu Miu liền lao tới nhanh như chớp, khiến em vô cùng khâm phục.<br/><br/>Em rất yêu quý Miu Miu vì chú không chỉ là một con mèo mà còn là người bạn nhỏ luôn ở bên em mỗi ngày. Em sẽ chăm sóc và yêu thương Miu Miu thật tốt để chú luôn khỏe mạnh, đáng yêu và mãi là niềm vui trong gia đình.</div> }
+            ]
+          }
+        };
+
+        // Component xử lý dạng câu hỏi Nối 2 Cột
+        const MatchingQuestion = ({ answers, setAnswers, submitted, khoaHocAnswers, matchingOptions }) => {
+            const [selectedMatch, setSelectedMatch] = useState(null);
+            const containerRef = useRef(null);
+            const leftRefs = useRef({});
+            const rightRefs = useRef({});
+            const [lines, setLines] = useState([]);
+
+            const matchColors = {
+                step1: { bg: 'bg-blue-100', border: 'border-blue-500', text: 'text-blue-800', badge: 'bg-blue-500', ring: 'ring-blue-300', stroke: '#3b82f6' },
+                step2: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800', badge: 'bg-green-500', ring: 'ring-green-300', stroke: '#22c55e' },
+                step3: { bg: 'bg-purple-100', border: 'border-purple-500', text: 'text-purple-800', badge: 'bg-purple-500', ring: 'ring-purple-300', stroke: '#a855f7' },
+                step4: { bg: 'bg-orange-100', border: 'border-orange-500', text: 'text-orange-800', badge: 'bg-orange-500', ring: 'ring-orange-300', stroke: '#f97316' },
+            };
+            const steps = [ { id: 'step1', label: 'Bước 1' }, { id: 'step2', label: 'Bước 2' }, { id: 'step3', label: 'Bước 3' }, { id: 'step4', label: 'Bước 4' } ];
+
+            const updateLines = () => {
+                if (!containerRef.current) return;
+                const containerRect = containerRef.current.getBoundingClientRect();
+                const newLines = [];
+                steps.forEach(step => {
+                    const answer = answers[step.id];
+                    if (answer && leftRefs.current[step.id] && rightRefs.current[answer]) {
+                        const lRect = leftRefs.current[step.id].getBoundingClientRect();
+                        const rRect = rightRefs.current[answer].getBoundingClientRect();
+                        let x1, y1, x2, y2;
+                        if (lRect.bottom < rRect.top) { 
+                            x1 = lRect.left + lRect.width / 2 - containerRect.left; y1 = lRect.bottom - containerRect.top;
+                            x2 = rRect.left + rRect.width / 2 - containerRect.left; y2 = rRect.top - containerRect.top;
+                        } else {
+                            x1 = lRect.right - containerRect.left; y1 = lRect.top + lRect.height / 2 - containerRect.top;
+                            x2 = rRect.left - containerRect.left; y2 = rRect.top + rRect.height / 2 - containerRect.top;
+                        }
+                        newLines.push({ id: step.id, x1, y1, x2, y2, color: matchColors[step.id].stroke });
+                    }
+                });
+                setLines(newLines);
+            };
+
+            useEffect(() => {
+                const timer = setTimeout(updateLines, 50);
+                window.addEventListener('resize', updateLines);
+                return () => { clearTimeout(timer); window.removeEventListener('resize', updateLines); };
+            }, [answers, submitted]);
+
+            const handleOptionClick = (opt) => {
+                if (submitted) return;
+                if (selectedMatch) {
+                    setAnswers(prev => {
+                        const newAnswers = { ...prev };
+                        steps.forEach(s => { if (newAnswers[s.id] === opt) newAnswers[s.id] = null; });
+                        newAnswers[selectedMatch] = opt;
+                        return newAnswers;
+                    });
+                    setSelectedMatch(null);
+                } else {
+                    setAnswers(prev => {
+                        const newAnswers = { ...prev };
+                        let changed = false;
+                        steps.forEach(s => {
+                            if (newAnswers[s.id] === opt) { newAnswers[s.id] = null; changed = true; }
+                        });
+                        return changed ? newAnswers : prev;
+                    });
+                }
+            };
+
+            return (
+                <div className="bg-indigo-50/50 p-5 rounded-xl border border-indigo-100 shadow-sm overflow-hidden">
+                    <p className="font-semibold text-lg mb-2 text-gray-800">Câu 5 (2 điểm). Em hãy nối thứ tự các bước ở cột A với tên bước ở cột B sao cho đúng với các bước lắp ghép mô hình cầu vượt.</p>
+                    <p className="text-sm text-gray-600 mb-6 italic bg-white inline-block px-3 py-1 rounded-full border border-gray-200">💡 <b>Hướng dẫn:</b> Nhấn chọn "Bước" ở cột A, sau đó chọn nội dung tương ứng ở cột B để vẽ đường nối lại với nhau.</p>
+                    <div className="relative flex flex-col md:flex-row gap-8 md:gap-20" ref={containerRef}>
+                        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ zIndex: 1, overflow: 'visible' }}>
+                            {lines.map(line => (
+                                <line key={`line-${line.id}`} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke={line.color} strokeWidth="4" strokeLinecap="round" style={{ filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))', transition: 'all 0.3s ease' }} />
+                            ))}
+                        </svg>
+                        <div className="flex-1 flex flex-col gap-4 relative z-10">
+                            <div className="font-bold text-center text-gray-700 bg-gray-200 py-2 rounded mb-1">Cột A</div>
+                            {steps.map(step => {
+                                const isSelected = selectedMatch === step.id; const hasAnswer = answers[step.id]; const colorScheme = matchColors[step.id];
+                                let btnClass = "p-3 rounded-xl border-2 font-bold text-center transition-all bg-white ";
+                                if (submitted) {
+                                    btnClass += hasAnswer ? `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} opacity-90 cursor-default` : "border-gray-300 bg-gray-100 text-gray-500 opacity-90 cursor-default";
+                                } else {
+                                    if (isSelected) btnClass += `${colorScheme.border} shadow-md ring-4 ${colorScheme.ring} text-gray-800 transform scale-105`;
+                                    else if (hasAnswer) btnClass += `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} hover:opacity-80`;
+                                    else btnClass += "border-gray-300 text-gray-700 hover:border-gray-400 hover:bg-gray-50";
+                                }
+                                return ( <button key={step.id} ref={el => leftRefs.current[step.id] = el} disabled={submitted} onClick={() => setSelectedMatch(step.id === selectedMatch ? null : step.id)} className={btnClass}>{step.label}</button> );
+                            })}
+                        </div>
+                        <div className="flex-[2] flex flex-col gap-4 relative z-10">
+                            <div className="font-bold text-center text-gray-700 bg-gray-200 py-2 rounded mb-1">Cột B</div>
+                            {matchingOptions.map(opt => {
+                                let assignedStepId = null; steps.forEach(s => { if (answers[s.id] === opt) assignedStepId = s.id; });
+                                const colorScheme = assignedStepId ? matchColors[assignedStepId] : null;
+                                let btnClass = "p-3 rounded-xl border-2 font-medium transition-all text-left flex items-center gap-3 bg-white ";
+                                if (submitted) {
+                                    btnClass += colorScheme ? `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} opacity-90 cursor-default` : "border-gray-300 bg-gray-100 text-gray-500 opacity-90 cursor-default";
+                                } else {
+                                    if (colorScheme) btnClass += `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} hover:opacity-80`;
+                                    else if (selectedMatch) btnClass += "border-dashed border-indigo-400 bg-indigo-50 text-indigo-800 hover:border-solid hover:shadow-md cursor-pointer";
+                                    else btnClass += "border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer";
+                                }
+                                return (
+                                    <button key={opt} ref={el => rightRefs.current[opt] = el} disabled={submitted} onClick={() => handleOptionClick(opt)} className={btnClass}>
+                                        <span className={`w-6 h-6 rounded-full border-2 flex-shrink-0 flex items-center justify-center text-xs font-bold text-white ${colorScheme ? `${colorScheme.badge} border-transparent` : 'border-gray-300 bg-white'}`}>{assignedStepId ? assignedStepId.replace('step', '') : ''}</span>
+                                        {opt}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    {submitted && (
+                        <div className="mt-8 p-4 bg-white rounded-xl border-2 border-gray-100 shadow-sm">
+                            <p className="font-bold text-gray-800 mb-3 flex items-center gap-2"><CheckCircle2 size={20} className="text-green-600"/> Kết quả đúng:</p>
+                            <div className="space-y-3">
+                                {steps.map(step => {
+                                    const isCorrect = answers[step.id] === khoaHocAnswers[step.id];
+                                    return (
+                                        <div key={step.id} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm bg-gray-50 p-2 rounded">
+                                            <div className="flex items-center gap-2 font-semibold whitespace-nowrap">
+                                                {isCorrect ? <CheckCircle2 size={18} className="text-green-600"/> : <XCircle size={18} className="text-red-600"/>}
+                                                <span className={matchColors[step.id].text}>{step.label}</span>
+                                            </div>
+                                            <span className="hidden sm:inline text-gray-400">→</span>
+                                            <span className={isCorrect ? "text-green-700 font-medium" : "text-gray-600"}>{answers[step.id] || '(Chưa nối)'}</span>
+                                            {!isCorrect && (<div className="mt-1 sm:mt-0 sm:ml-auto text-red-600 font-medium bg-red-50 px-2 py-1 rounded text-xs border border-red-100">Đúng: {khoaHocAnswers[step.id]}</div>)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
         };
 
         function App() {
+          const [activeTab, setActiveTab] = useState('tiengViet'); // Đổi tab mặc định sang Tiếng Việt
           const [answers, setAnswers] = useState({});
           const [submitted, setSubmitted] = useState(false);
           const [scoreTN, setScoreTN] = useState(0);
+
+          const currentData = quizData[activeTab];
+
+          const handleTabChange = (tab) => {
+            setActiveTab(tab);
+            setAnswers({});
+            setSubmitted(false);
+            setScoreTN(0);
+          };
 
           const handleOptionChange = (questionId, optionKey) => {
             if (submitted) return;
@@ -148,15 +566,20 @@
 
           const calculateScore = () => {
             let score = 0;
-            quizData.tracNghiem.forEach(q => {
-              if (answers[q.id] === q.correct) {
-                score += q.score;
+            currentData.tracNghiem.forEach(q => {
+              if (q.type === 'dien_khuyet') {
+                if (answers['q4_1'] === q4Answers['q4_1']) score += 0.5;
+                if (answers['q4_2'] === q4Answers['q4_2']) score += 0.5;
+                if (answers['q4_3'] === q4Answers['q4_3']) score += 0.5;
+              } else if (q.type === 'noi_buoc') {
+                if (answers['step1'] === khoaHocAnswers.step1) score += 0.5;
+                if (answers['step2'] === khoaHocAnswers.step2) score += 0.5;
+                if (answers['step3'] === khoaHocAnswers.step3) score += 0.5;
+                if (answers['step4'] === khoaHocAnswers.step4) score += 0.5;
+              } else {
+                if (answers[q.id] === q.correct) score += q.score;
               }
             });
-            if (answers['q4_1'] === q4Answers['q4_1']) score += 0.5;
-            if (answers['q4_2'] === q4Answers['q4_2']) score += 0.5;
-            if (answers['q4_3'] === q4Answers['q4_3']) score += 0.5;
-
             setScoreTN(score);
             setSubmitted(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -169,243 +592,160 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
           };
 
+          const getThemeColors = () => {
+              if (currentData.theme === 'emerald') return { header: 'from-emerald-600 to-teal-700', text: 'text-emerald-800', bg: 'bg-emerald-500', btn: 'bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-500/30 hover:shadow-emerald-500/50', border: 'border-emerald-200' };
+              if (currentData.theme === 'indigo') return { header: 'from-indigo-600 to-purple-700', text: 'text-indigo-800', bg: 'bg-indigo-500', btn: 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-indigo-500/30 hover:shadow-indigo-500/50', border: 'border-indigo-200' };
+              if (currentData.theme === 'rose') return { header: 'from-rose-500 to-red-600', text: 'text-rose-800', bg: 'bg-rose-500', btn: 'bg-gradient-to-r from-rose-500 to-red-600 shadow-rose-500/30 hover:shadow-rose-500/50', border: 'border-rose-200' };
+              return { header: 'from-blue-600 to-indigo-700', text: 'text-blue-800', bg: 'bg-blue-500', btn: 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-blue-500/30 hover:shadow-blue-500/50', border: 'border-blue-200' };
+          };
+
+          const colors = getThemeColors();
+
           return (
-            <div className="min-h-screen py-8 px-4 font-sans text-gray-800">
-              <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-blue-100">
+            <div className={`min-h-screen py-8 px-4 font-sans text-gray-800 bg-gray-50`}>
+              <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-200">
                 
                 {/* Header */}
-                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 p-6 text-white text-center relative overflow-hidden">
+                <div className={`bg-gradient-to-r ${colors.header} p-6 text-white text-center relative overflow-hidden transition-all duration-500`}>
                   <BookOpen className="absolute -left-4 -top-4 w-24 h-24 text-white opacity-20 transform -rotate-12" />
                   <Award className="absolute -right-4 -top-4 w-24 h-24 text-white opacity-20 transform rotate-12" />
                   <h1 className="text-3xl md:text-4xl font-bold mb-2">ĐỀ ÔN CUỐI KÌ 2</h1>
-                  <h2 className="text-xl md:text-2xl font-medium opacity-90">Môn: Lịch sử - Địa lí lớp 4</h2>
+                  <h2 className="text-xl md:text-2xl font-medium opacity-90">Lớp 4</h2>
+                </div>
+
+                {/* Tab Menu */}
+                <div className="bg-gray-100 border-b border-gray-200 p-4">
+                  <div className="flex flex-wrap justify-center gap-3">
+                    <button onClick={() => handleTabChange('tiengViet')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'tiengViet' ? 'bg-rose-600 text-white shadow-lg scale-105' : 'bg-white text-rose-600 border border-rose-200 hover:bg-rose-50'}`}><BookMarked size={20} /> Tiếng Việt</button>
+                    <button onClick={() => handleTabChange('toan')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'toan' ? 'bg-emerald-600 text-white shadow-lg scale-105' : 'bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50'}`}><Calculator size={20} /> Toán</button>
+                    <button onClick={() => handleTabChange('khoaHoc')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'khoaHoc' ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50'}`}><Microscope size={20} /> Khoa học</button>
+                    <button onClick={() => handleTabChange('lichSu')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'lichSu' ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-white text-blue-600 border border-blue-200 hover:bg-blue-50'}`}><Globe size={20} /> Lịch sử - Địa lí</button>
+                  </div>
                 </div>
 
                 {/* Bảng kết quả */}
                 {submitted && (
                   <div className="m-6 p-6 bg-yellow-50 border-2 border-yellow-400 rounded-xl flex flex-col items-center shadow-sm">
                     <h3 className="text-2xl font-bold text-yellow-700 mb-2">Kết quả phần Trắc nghiệm</h3>
-                    <div className="text-5xl font-black text-yellow-600 mb-2">{scoreTN.toFixed(1)} / 6.0</div>
+                    <div className="text-5xl font-black text-yellow-600 mb-2">{scoreTN.toFixed(1)} / {currentData.maxScoreTN.toFixed(1)}</div>
                     <p className="text-gray-700 text-center text-lg mb-4">
-                      Tuyệt vời! Con đã hoàn thành phần trắc nghiệm. Hãy tiếp tục ôn tập phần Tự luận bên dưới nhé!
+                      Tuyệt vời! Con đã hoàn thành phần trắc nghiệm môn {currentData.title}. Hãy tiếp tục ôn tập phần Tự luận bên dưới nhé!
                     </p>
-                    <button 
-                      onClick={resetQuiz}
-                      className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105"
-                    >
-                      <RefreshCw size={20} /> Làm lại bài
-                    </button>
+                    <button onClick={resetQuiz} className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105"><RefreshCw size={20} /> Làm lại bài</button>
                   </div>
                 )}
 
                 <div className="p-6 md:p-8">
+                  {/* PHẦN ĐỌC HIỂU (Cho Tiếng Việt) */}
+                  {currentData.readingText && (
+                    <div className={`mb-10 p-6 md:p-8 bg-white rounded-2xl border-2 ${colors.border} shadow-sm`}>
+                        <h3 className={`text-2xl md:text-3xl font-bold ${colors.text} mb-6 text-center leading-tight`}>
+                            {currentData.readingTitle}
+                        </h3>
+                        <div className="text-lg leading-loose text-gray-800 space-y-4">
+                            {currentData.readingText.split('\n').map((p, idx) => (
+                                <p key={idx} className="text-justify md:px-4">{p}</p>
+                            ))}
+                        </div>
+                        {currentData.readingAuthor && (
+                            <p className={`text-right font-bold mt-6 text-lg ${colors.text} italic md:px-4`}>
+                                {currentData.readingAuthor}
+                            </p>
+                        )}
+                    </div>
+                  )}
+
                   {/* I. PHẦN TRẮC NGHIỆM */}
                   <section className="mb-12">
-                    <div className="flex items-center gap-3 border-b-2 border-blue-200 pb-3 mb-6">
-                      <div className="bg-blue-500 text-white p-2 rounded-lg">
-                        <CheckCircle2 size={24} />
-                      </div>
-                      <h2 className="text-2xl font-bold text-blue-800">I. PHẦN TRẮC NGHIỆM (6 điểm)</h2>
+                    <div className={`flex items-center gap-3 border-b-2 ${colors.border} pb-3 mb-6`}>
+                      <div className={`${colors.bg} text-white p-2 rounded-lg`}><CheckCircle2 size={24} /></div>
+                      <h2 className={`text-2xl font-bold ${colors.text}`}>I. PHẦN TRẮC NGHIỆM ({currentData.maxScoreTN} điểm)</h2>
                     </div>
 
                     <div className="space-y-8">
-                      {quizData.tracNghiem.slice(0, 3).map((q) => (
-                        <div key={q.id} className="bg-gray-50 p-5 rounded-xl border border-gray-100 shadow-sm">
-                          <p className="font-semibold text-lg mb-4 text-gray-800">{q.question}</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {Object.entries(q.options).map(([key, value]) => {
-                              const isSelected = answers[q.id] === key;
-                              const isCorrect = q.correct === key;
-                              
-                              let btnClass = "text-left p-3 rounded-lg border-2 transition-all duration-200 flex items-start gap-3 ";
-                              if (!submitted) {
-                                btnClass += isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-200 hover:border-blue-300 hover:bg-blue-50";
-                              } else {
-                                if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
-                                else if (isSelected && !isCorrect) btnClass += "bg-red-100 border-red-500 text-red-800";
-                                else btnClass += "bg-white border-gray-200 opacity-50";
-                              }
+                      {currentData.tracNghiem.map((q) => {
+                        // 1. Dạng câu Điền Khuyết (Lịch sử)
+                        if (q.type === 'dien_khuyet') {
+                          return (
+                            <div key="dien_khuyet" className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 shadow-sm">
+                              <p className="font-semibold text-lg mb-3 text-gray-800">Câu 4 (1.5 điểm). Chọn từ thích hợp để điền vào chỗ trống.</p>
+                              <div className="flex flex-wrap gap-2 mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                                <span className="text-gray-500 font-medium mr-2">Từ gợi ý:</span>
+                                {q4Options.map(opt => <span key={opt} className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">{opt}</span>)}
+                              </div>
+                              <div className="text-lg leading-loose text-gray-800 bg-white p-4 rounded-xl border border-gray-200">
+                                Cồng chiêng gắn liền với đời sống <select disabled={submitted} value={answers['q4_1'] || ''} onChange={(e) => handleOptionChange('q4_1', e.target.value)} className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-blue-500 text-blue-700' : answers['q4_1'] === q4Answers['q4_1'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (1) ---</option>{q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                của người Tây Nguyên từ lúc <select disabled={submitted} value={answers['q4_2'] || ''} onChange={(e) => handleOptionChange('q4_2', e.target.value)} className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-blue-500 text-blue-700' : answers['q4_2'] === q4Answers['q4_2'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (2) ---</option>{q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                đến khi <select disabled={submitted} value={answers['q4_3'] || ''} onChange={(e) => handleOptionChange('q4_3', e.target.value)} className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-blue-500 text-blue-700' : answers['q4_3'] === q4Answers['q4_3'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (3) ---</option>{q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>.
+                              </div>
+                              {submitted && (<div className="mt-4 p-3 bg-white rounded-lg border border-gray-200"><p className="font-bold text-gray-700 mb-1">Đáp án đúng:</p><ul className="list-disc pl-5 text-green-700 font-medium"><li>(1) {q4Answers.q4_1}</li><li>(2) {q4Answers.q4_2}</li><li>(3) {q4Answers.q4_3}</li></ul></div>)}
+                            </div>
+                          );
+                        }
 
-                              return (
-                                <button
-                                  key={key}
-                                  onClick={() => handleOptionChange(q.id, key)}
-                                  disabled={submitted}
-                                  className={btnClass}
-                                >
-                                  <span className={`w-6 h-6 shrink-0 flex items-center justify-center rounded-full text-sm font-bold ${
-                                    (submitted && isCorrect) ? "bg-green-500 text-white" : 
-                                    (submitted && isSelected && !isCorrect) ? "bg-red-500 text-white" : 
-                                    isSelected ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
-                                  }`}>
-                                    {key}
-                                  </span>
-                                  <span className="leading-tight pt-0.5">{value}</span>
-                                </button>
-                              );
-                            })}
+                        // 2. Dạng câu Nối Bước (Khoa học)
+                        if (q.type === 'noi_buoc') {
+                          return ( <MatchingQuestion key="noi_buoc" answers={answers} setAnswers={setAnswers} submitted={submitted} khoaHocAnswers={khoaHocAnswers} matchingOptions={quizData.khoaHoc.matchingOptions} /> );
+                        }
+
+                        // 3. Dạng Trắc nghiệm thông thường
+                        return (
+                          <div key={q.id} className="bg-white p-5 rounded-xl border border-gray-200 shadow-sm">
+                            <div className="font-semibold text-lg mb-4 text-gray-800">{q.question}</div>
+                            {q.customContent && <div className="my-5">{q.customContent}</div>}
+                            {q.questionText2 && <div className="font-semibold text-lg mb-4 text-gray-800">{q.questionText2}</div>}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              {Object.entries(q.options).map(([key, value]) => {
+                                const isSelected = answers[q.id] === key; const isCorrect = q.correct === key;
+                                let btnClass = "text-left p-3 rounded-lg border-2 transition-all duration-200 flex items-center gap-3 ";
+                                if (!submitted) btnClass += isSelected ? `bg-${currentData.theme}-100 border-${currentData.theme}-500` : "bg-gray-50 border-gray-200 hover:border-gray-300 hover:bg-gray-100";
+                                else {
+                                  if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
+                                  else if (isSelected && !isCorrect) btnClass += "bg-red-100 border-red-500 text-red-800";
+                                  else btnClass += "bg-gray-50 border-gray-200 opacity-50";
+                                }
+                                return (
+                                  <button key={key} onClick={() => handleOptionChange(q.id, key)} disabled={submitted} className={btnClass}>
+                                    <span className={`w-8 h-8 shrink-0 flex items-center justify-center rounded-full text-base font-bold ${ (submitted && isCorrect) ? "bg-green-500 text-white" : (submitted && isSelected && !isCorrect) ? "bg-red-500 text-white" : isSelected ? `${colors.bg} text-white` : "bg-gray-200 text-gray-600" }`}>{key}</span>
+                                    <span className="leading-tight pt-0.5 text-lg flex items-center">{value}</span>
+                                  </button>
+                                );
+                              })}
+                            </div>
+                            {submitted && answers[q.id] !== q.correct && (<div className="mt-4 flex items-center gap-2 text-red-600 font-medium"><XCircle size={20} /> Sai rồi! Đáp án đúng là {q.correct}.</div>)}
+                            {submitted && answers[q.id] === q.correct && (<div className="mt-4 flex items-center gap-2 text-green-600 font-medium"><CheckCircle2 size={20} /> Chính xác! (+{q.score}đ)</div>)}
                           </div>
-                          {submitted && answers[q.id] !== q.correct && (
-                            <div className="mt-3 flex items-center gap-2 text-red-600 font-medium">
-                              <XCircle size={18} /> Sai rồi! Đáp án đúng là {q.correct}.
-                            </div>
-                          )}
-                          {submitted && answers[q.id] === q.correct && (
-                            <div className="mt-3 flex items-center gap-2 text-green-600 font-medium">
-                              <CheckCircle2 size={18} /> Chính xác! (+{q.score}đ)
-                            </div>
-                          )}
-                        </div>
-                      ))}
-
-                      {/* CÂU 4 ĐẶC BIỆT: ĐIỀN KHUYẾT */}
-                      <div className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 shadow-sm">
-                        <p className="font-semibold text-lg mb-3 text-gray-800">
-                          Câu 4 (1.5 điểm). Chọn từ thích hợp để điền vào chỗ trống.
-                        </p>
-                        <div className="flex flex-wrap gap-2 mb-4 p-3 bg-white rounded-lg border border-gray-200">
-                          <span className="text-gray-500 font-medium mr-2">Từ gợi ý:</span>
-                          {q4Options.map(opt => (
-                            <span key={opt} className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-medium">
-                              {opt}
-                            </span>
-                          ))}
-                        </div>
-                        <div className="text-lg leading-loose text-gray-800 bg-white p-4 rounded-xl border border-gray-200">
-                          Cồng chiêng gắn liền với đời sống 
-                          <select 
-                            disabled={submitted}
-                            value={answers['q4_1'] || ''}
-                            onChange={(e) => handleOptionChange('q4_1', e.target.value)}
-                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
-                              !submitted ? 'border-blue-500 text-blue-700' : 
-                              answers['q4_1'] === q4Answers['q4_1'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
-                            }`}
-                          >
-                            <option value="" disabled>--- (1) ---</option>
-                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                          </select>
-                          của người Tây Nguyên từ lúc 
-                          <select 
-                            disabled={submitted}
-                            value={answers['q4_2'] || ''}
-                            onChange={(e) => handleOptionChange('q4_2', e.target.value)}
-                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
-                              !submitted ? 'border-blue-500 text-blue-700' : 
-                              answers['q4_2'] === q4Answers['q4_2'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
-                            }`}
-                          >
-                            <option value="" disabled>--- (2) ---</option>
-                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                          </select>
-                          đến khi 
-                          <select 
-                            disabled={submitted}
-                            value={answers['q4_3'] || ''}
-                            onChange={(e) => handleOptionChange('q4_3', e.target.value)}
-                            className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${
-                              !submitted ? 'border-blue-500 text-blue-700' : 
-                              answers['q4_3'] === q4Answers['q4_3'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'
-                            }`}
-                          >
-                            <option value="" disabled>--- (3) ---</option>
-                            {q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
-                          </select>.
-                        </div>
-                        
-                        {submitted && (
-                          <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200">
-                            <p className="font-bold text-gray-700 mb-1">Đáp án đúng:</p>
-                            <ul className="list-disc pl-5 text-green-700 font-medium">
-                              <li>(1) {q4Answers.q4_1}</li>
-                              <li>(2) {q4Answers.q4_2}</li>
-                              <li>(3) {q4Answers.q4_3}</li>
-                            </ul>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Các câu trắc nghiệm còn lại (Câu 5, 6) */}
-                      {quizData.tracNghiem.slice(3).map((q) => (
-                        <div key={q.id} className="bg-gray-50 p-5 rounded-xl border border-gray-100 shadow-sm">
-                          <p className="font-semibold text-lg mb-4 text-gray-800">{q.question}</p>
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                            {Object.entries(q.options).map(([key, value]) => {
-                              const isSelected = answers[q.id] === key;
-                              const isCorrect = q.correct === key;
-                              
-                              let btnClass = "text-left p-3 rounded-lg border-2 transition-all duration-200 flex items-start gap-3 ";
-                              if (!submitted) {
-                                btnClass += isSelected ? "bg-blue-100 border-blue-500" : "bg-white border-gray-200 hover:border-blue-300 hover:bg-blue-50";
-                              } else {
-                                if (isCorrect) btnClass += "bg-green-100 border-green-500 text-green-800";
-                                else if (isSelected && !isCorrect) btnClass += "bg-red-100 border-red-500 text-red-800";
-                                else btnClass += "bg-white border-gray-200 opacity-50";
-                              }
-
-                              return (
-                                <button
-                                  key={key}
-                                  onClick={() => handleOptionChange(q.id, key)}
-                                  disabled={submitted}
-                                  className={btnClass}
-                                >
-                                  <span className={`w-6 h-6 shrink-0 flex items-center justify-center rounded-full text-sm font-bold ${
-                                    (submitted && isCorrect) ? "bg-green-500 text-white" : 
-                                    (submitted && isSelected && !isCorrect) ? "bg-red-500 text-white" : 
-                                    isSelected ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-600"
-                                  }`}>
-                                    {key}
-                                  </span>
-                                  <span className="leading-tight pt-0.5">{value}</span>
-                                </button>
-                              );
-                            })}
-                          </div>
-                          {submitted && answers[q.id] !== q.correct && (
-                            <div className="mt-3 flex items-center gap-2 text-red-600 font-medium">
-                              <XCircle size={18} /> Sai rồi! Đáp án đúng là {q.correct}.
-                            </div>
-                          )}
-                          {submitted && answers[q.id] === q.correct && (
-                            <div className="mt-3 flex items-center gap-2 text-green-600 font-medium">
-                              <CheckCircle2 size={18} /> Chính xác! (+{q.score}đ)
-                            </div>
-                          )}
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   </section>
 
                   {/* II. PHẦN TỰ LUẬN */}
                   <section className="mb-8">
-                    <div className="flex items-center gap-3 border-b-2 border-indigo-200 pb-3 mb-6">
-                      <div className="bg-indigo-500 text-white p-2 rounded-lg">
-                        <PenTool size={24} />
-                      </div>
-                      <h2 className="text-2xl font-bold text-indigo-800">II. PHẦN TỰ LUẬN (4 điểm)</h2>
+                    <div className={`flex items-center gap-3 border-b-2 ${colors.border} pb-3 mb-6`}>
+                      <div className={`${colors.bg} text-white p-2 rounded-lg`}><PenTool size={24} /></div>
+                      <h2 className={`text-2xl font-bold ${colors.text}`}>II. PHẦN TỰ LUẬN ({currentData.maxScoreTL} điểm)</h2>
                     </div>
 
                     <div className="space-y-6">
-                      {quizData.tuLuan.map((q) => (
-                        <div key={q.id} className="bg-white p-5 rounded-xl border-2 border-indigo-100 shadow-sm flex flex-col gap-4">
-                          <p className="font-semibold text-xl text-gray-800">{q.question}</p>
+                      {currentData.tuLuan.map((q) => (
+                        <div key={q.id} className={`bg-white p-5 rounded-xl border-2 ${colors.border} shadow-sm flex flex-col gap-4`}>
+                          <div className="font-semibold text-xl text-gray-800 leading-relaxed">{q.question}</div>
                           
-                          <textarea
-                            disabled={submitted}
-                            value={answers[q.id] || ''}
-                            onChange={(e) => handleTextChange(q.id, e.target.value)}
-                            placeholder="Bé hãy gõ câu trả lời vào đây..."
-                            className="w-full min-h-[100px] p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none resize-y transition-shadow disabled:bg-gray-50 disabled:text-gray-600 text-lg"
-                          ></textarea>
+                          {/* KIỂM TRA Render Custom Input */}
+                          {q.renderCustomInput ? (
+                              q.renderCustomInput(answers, handleTextChange, submitted)
+                          ) : (
+                              <textarea
+                                disabled={submitted} value={answers[q.id] || ''} onChange={(e) => handleTextChange(q.id, e.target.value)}
+                                placeholder="Bé hãy gõ câu trả lời vào đây..."
+                                className={`w-full min-h-[100px] p-4 border border-gray-300 rounded-xl focus:ring-2 outline-none resize-y transition-shadow disabled:bg-gray-50 disabled:text-gray-600 text-lg focus:ring-${currentData.theme}-500 focus:border-${currentData.theme}-500`}
+                              ></textarea>
+                          )}
 
-                          <div className="p-5 bg-indigo-50 border border-indigo-200 rounded-xl">
-                            <h4 className="font-bold text-indigo-800 mb-2 flex items-center gap-2">
-                              <BookOpen size={20} /> Đáp án để bé học thuộc:
-                            </h4>
-                            <p className="text-indigo-950 whitespace-pre-line text-lg leading-relaxed font-medium">
-                              {q.hint}
-                            </p>
+                          <div className={`p-5 bg-${currentData.theme}-50 border ${colors.border} rounded-xl`}>
+                            <h4 className={`font-bold ${colors.text} mb-3 flex items-center gap-2`}><BookOpen size={20} /> Hướng dẫn & Đáp án:</h4>
+                            <div className={`text-${currentData.theme}-950 text-lg leading-relaxed font-medium`}>{q.hint}</div>
                           </div>
                         </div>
                       ))}
@@ -415,10 +755,7 @@
                   {/* Nút Nộp Bài */}
                   {!submitted && (
                     <div className="text-center mt-10">
-                      <button
-                        onClick={calculateScore}
-                        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-10 py-4 rounded-full text-xl font-bold shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 hover:-translate-y-1 transition-all"
-                      >
+                      <button onClick={calculateScore} className={`text-white px-10 py-4 rounded-full text-xl font-bold transition-all ${colors.btn}`}>
                         Nộp bài & Xem kết quả
                       </button>
                     </div>
