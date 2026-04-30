@@ -51,7 +51,6 @@
 
         // --- CÁC COMPONENT ĐẶC TRƯNG ---
         
-        // Trình bày phân số chuẩn
         const Frac = ({ n, d }) => (
             <span className="inline-flex flex-col items-center justify-center align-middle mx-1 font-bold text-emerald-800" style={{ fontSize: '1em', lineHeight: '1.2' }}>
                 <span className="border-b-[2.5px] border-emerald-800 px-1 w-full text-center pb-0.5">{n}</span>
@@ -59,7 +58,6 @@
             </span>
         );
         
-        // Ô nhập liệu trên cùng 1 dòng
         const InlineFillInput = ({ value, onChange, disabled, className = "w-20", colorTheme = "emerald" }) => {
             const themeMap = {
                 emerald: "border-emerald-500 focus:border-emerald-600 bg-emerald-50 focus:bg-emerald-100 text-emerald-900 border-emerald-300",
@@ -79,7 +77,6 @@
             );
         };
 
-        // Ô vuông nhỏ điền dấu
         const InlineSignInput = ({ value, onChange, disabled }) => (
             <input 
                 type="text" 
@@ -90,7 +87,6 @@
             />
         );
 
-        // Giao diện ô nhập phân số nền tối
         const MathDarkInput = ({ value, onChange, disabled }) => (
             <input 
                 type="text" 
@@ -101,7 +97,6 @@
             />
         );
 
-        // UI Cộng/Trừ phân số
         const FractionAddDark = ({ prefix, op, answers, onChange, submitted }) => (
             <div className="flex items-center gap-2 md:gap-4 shrink-0 bg-[#151c2c] p-4 md:p-6 rounded-xl font-sans">
                 <div className="flex flex-col gap-2 items-center">
@@ -135,7 +130,6 @@
             </div>
         );
 
-        // UI Rút gọn phân số (hoặc quy đồng)
         const FractionSimplifyDark = ({ prefix, op, answers, onChange, submitted }) => (
             <div className="flex items-center gap-3 md:gap-5 shrink-0 bg-[#151c2c] p-4 md:p-6 rounded-xl font-sans">
                 <div className="flex flex-col gap-2 items-center">
@@ -164,7 +158,6 @@
             </div>
         );
 
-        // Hình Toán
         const MathSvgQ1 = () => (
             <svg width="100%" height="auto" viewBox="0 0 320 200" className="max-w-md mx-auto bg-white border border-gray-300 rounded-lg shadow-sm">
                 <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e5e7eb" strokeWidth="1"/></pattern></defs>
@@ -252,7 +245,65 @@
             ],
             tuLuan: [
               { id: 'kh_tl1', question: 'Câu 1 (1 điểm). Theo em tiêu chí lắp ghép mô hình kĩ thuật là gì?', hint: '- Đầy đủ các bộ phận.\n- Mối ghép chắc chắn đúng vị trí.' },
-              { id: 'kh_tl2', question: 'Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật:\na) Tua-vít\nb) Cờ-lê', hint: 'a) Tua-vít: Có tác dụng để vặn vít.\nb) Cờ-lê: Có tác dụng để giữ ốc.' },
+              { 
+                id: 'kh_tl2', 
+                question: <div>Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật có trong hình ảnh dưới đây.</div>,
+                renderCustomInput: (answers, onChange, submitted) => (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                        {/* Tua - vít */}
+                        <div className="flex flex-col gap-4">
+                            <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
+                                <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="10" y="10" width="60" height="20" rx="4" fill="#dc2626" />
+                                    <rect x="70" y="16" width="50" height="8" fill="#cbd5e1" />
+                                    <polygon points="120,16 140,18 140,22 120,24" fill="#64748b" />
+                                    <line x1="20" y1="10" x2="20" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                    <line x1="30" y1="10" x2="30" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                    <line x1="40" y1="10" x2="40" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                    <line x1="50" y1="10" x2="50" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                    <line x1="60" y1="10" x2="60" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                </svg>
+                            </div>
+                            <div className="font-bold text-xl text-center text-gray-800">Tua – vít</div>
+                            <div className="w-full flex items-start gap-3 text-lg">
+                                <span className="font-bold mt-2 text-indigo-700">a)</span>
+                                <textarea
+                                    disabled={submitted}
+                                    value={answers['kh_tl2_a'] || ''}
+                                    onChange={(e) => onChange('kh_tl2_a', e.target.value)}
+                                    className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all"
+                                    placeholder="Tác dụng của tua-vít..."
+                                />
+                            </div>
+                        </div>
+                        {/* Cờ - lê */}
+                        <div className="flex flex-col gap-4">
+                            <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
+                                <svg width="150" height="40" viewBox="0 0 150 40">
+                                    <rect x="30" y="14" width="90" height="12" rx="4" fill="#94a3b8" />
+                                    <circle cx="25" cy="20" r="16" fill="#94a3b8" />
+                                    <circle cx="20" cy="20" r="10" fill="#f9fafb" />
+                                    <rect x="0" y="15" width="25" height="10" fill="#f9fafb" />
+                                    <circle cx="125" cy="20" r="14" fill="#94a3b8" />
+                                    <polygon points="118,14 132,14 139,20 132,26 118,26 111,20" fill="#f9fafb" />
+                                </svg>
+                            </div>
+                            <div className="font-bold text-xl text-center text-gray-800">Cờ – lê</div>
+                            <div className="w-full flex items-start gap-3 text-lg">
+                                <span className="font-bold mt-2 text-indigo-700">b)</span>
+                                <textarea
+                                    disabled={submitted}
+                                    value={answers['kh_tl2_b'] || ''}
+                                    onChange={(e) => onChange('kh_tl2_b', e.target.value)}
+                                    className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all"
+                                    placeholder="Tác dụng của cờ-lê..."
+                                />
+                            </div>
+                        </div>
+                    </div>
+                ),
+                hint: <div>a) Tua-vít: Có tác dụng để vặn vít.<br/><br/>b) Cờ-lê: Có tác dụng để giữ ốc.</div> 
+              },
               { id: 'kh_tl3', question: 'Câu 3 (1 điểm). Kể tên 2 đồ chơi dân gian mà em biết.', hint: 'Ví dụ: Tò he, Đèn ông sao, Diều giấy, Chong chóng...' },
               { id: 'kh_tl4', question: 'Câu 4 (2 điểm). Các bộ phận chính của diều giấy là gì?', hint: 'Các bộ phận chính của diều giấy là:\n- Thân diều\n- Cánh diều\n- Đuôi diều ngắn\n- Đuôi diều dài\n- Dây diều' }
             ]
@@ -516,7 +567,7 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                     </div>
                     {submitted && (
                         <div className="mt-8 p-4 bg-white rounded-xl border-2 border-gray-100 shadow-sm">
-                            <p className="font-bold text-gray-800 mb-3 flex items-center gap-2"><CheckCircle2 size={20} className="text-green-600"/> Kết quả đúng:</p>
+                            <p className="font-bold text-gray-800 mb-3 flex items-center gap-2"><BookOpen size={20} className="text-indigo-500"/> Hướng dẫn đáp án & Kết quả:</p>
                             <div className="space-y-3">
                                 {steps.map(step => {
                                     const isCorrect = answers[step.id] === khoaHocAnswers[step.id];
@@ -540,7 +591,7 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
         };
 
         function App() {
-          const [activeTab, setActiveTab] = useState('tiengViet'); // Đổi tab mặc định sang Tiếng Việt
+          const [activeTab, setActiveTab] = useState('tiengViet'); 
           const [answers, setAnswers] = useState({});
           const [submitted, setSubmitted] = useState(false);
           const [scoreTN, setScoreTN] = useState(0);
@@ -631,7 +682,6 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                     <p className="text-gray-700 text-center text-lg mb-4">
                       Tuyệt vời! Con đã hoàn thành phần trắc nghiệm môn {currentData.title}. Hãy tiếp tục ôn tập phần Tự luận bên dưới nhé!
                     </p>
-                    <button onClick={resetQuiz} className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-2 rounded-full font-bold transition-transform hover:scale-105"><RefreshCw size={20} /> Làm lại bài</button>
                   </div>
                 )}
 
@@ -678,7 +728,18 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                                 của người Tây Nguyên từ lúc <select disabled={submitted} value={answers['q4_2'] || ''} onChange={(e) => handleOptionChange('q4_2', e.target.value)} className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-blue-500 text-blue-700' : answers['q4_2'] === q4Answers['q4_2'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (2) ---</option>{q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
                                 đến khi <select disabled={submitted} value={answers['q4_3'] || ''} onChange={(e) => handleOptionChange('q4_3', e.target.value)} className={`mx-2 p-1 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-blue-500 text-blue-700' : answers['q4_3'] === q4Answers['q4_3'] ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (3) ---</option>{q4Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>.
                               </div>
-                              {submitted && (<div className="mt-4 p-3 bg-white rounded-lg border border-gray-200"><p className="font-bold text-gray-700 mb-1">Đáp án đúng:</p><ul className="list-disc pl-5 text-green-700 font-medium"><li>(1) {q4Answers.q4_1}</li><li>(2) {q4Answers.q4_2}</li><li>(3) {q4Answers.q4_3}</li></ul></div>)}
+                              {submitted && (
+                                <div className={`mt-4 p-4 rounded-xl border ${answers['q4_1'] === q4Answers.q4_1 && answers['q4_2'] === q4Answers.q4_2 && answers['q4_3'] === q4Answers.q4_3 ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
+                                   <div className="bg-white p-3 rounded-lg border border-gray-200">
+                                       <p className="font-bold text-gray-700 mb-2 flex items-center gap-2"><BookOpen size={18} className="text-blue-500" /> Hướng dẫn đáp án:</p>
+                                       <ul className="list-disc pl-5 text-gray-800 font-medium">
+                                         <li>(1) <span className="text-green-600 font-bold">{q4Answers.q4_1}</span></li>
+                                         <li>(2) <span className="text-green-600 font-bold">{q4Answers.q4_2}</span></li>
+                                         <li>(3) <span className="text-green-600 font-bold">{q4Answers.q4_3}</span></li>
+                                       </ul>
+                                   </div>
+                                </div>
+                              )}
                             </div>
                           );
                         }
@@ -712,8 +773,23 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                                 );
                               })}
                             </div>
-                            {submitted && answers[q.id] !== q.correct && (<div className="mt-4 flex items-center gap-2 text-red-600 font-medium"><XCircle size={20} /> Sai rồi! Đáp án đúng là {q.correct}.</div>)}
-                            {submitted && answers[q.id] === q.correct && (<div className="mt-4 flex items-center gap-2 text-green-600 font-medium"><CheckCircle2 size={20} /> Chính xác! (+{q.score}đ)</div>)}
+
+                            {/* Hướng dẫn đáp án cho phần trắc nghiệm thông thường */}
+                            {submitted && (
+                              <div className={`mt-5 p-4 rounded-xl border ${answers[q.id] === q.correct ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200'}`}>
+                                  <div className={`font-bold flex items-center gap-2 ${answers[q.id] === q.correct ? 'text-green-700' : 'text-red-700'}`}>
+                                      {answers[q.id] === q.correct ? <CheckCircle2 size={20} /> : <XCircle size={20} />}
+                                      {answers[q.id] === q.correct ? `Chính xác! (+${q.score} điểm)` : 'Chưa chính xác!'}
+                                  </div>
+                                  <div className="bg-white p-3 rounded-lg border border-gray-200 mt-3 flex items-center gap-2 flex-wrap">
+                                      <BookOpen size={18} className={`text-${currentData.theme}-500`} />
+                                      <span className="font-bold text-gray-700">Hướng dẫn đáp án:</span>
+                                      <span className={`inline-flex items-center justify-center w-7 h-7 rounded-full ${colors.bg} text-white text-sm font-bold ml-1 mr-1`}>{q.correct}</span>
+                                      <span className="font-medium text-gray-800 flex items-center">{q.options[q.correct]}</span>
+                                  </div>
+                              </div>
+                            )}
+
                           </div>
                         );
                       })}
@@ -752,14 +828,21 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                     </div>
                   </section>
 
-                  {/* Nút Nộp Bài */}
-                  {!submitted && (
-                    <div className="text-center mt-10">
-                      <button onClick={calculateScore} className={`text-white px-10 py-4 rounded-full text-xl font-bold transition-all ${colors.btn}`}>
+                  {/* Nút Hành Động Ở Dưới Cùng */}
+                  <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-10">
+                    {!submitted && (
+                      <button onClick={calculateScore} className={`text-white px-10 py-4 rounded-full text-xl font-bold transition-all ${colors.btn} shadow-lg w-full sm:w-auto`}>
                         Nộp bài & Xem kết quả
                       </button>
-                    </div>
-                  )}
+                    )}
+                    <button 
+                      onClick={resetQuiz} 
+                      className="flex items-center justify-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-8 py-4 rounded-full text-lg font-bold transition-transform hover:scale-105 shadow-md w-full sm:w-auto"
+                    >
+                      <RefreshCw size={24} /> Xoá làm lại toàn bộ
+                    </button>
+                  </div>
+
                 </div>
               </div>
             </div>
