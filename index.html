@@ -18,39 +18,19 @@
         const { useState, useEffect, useRef } = React;
 
         // Các biểu tượng (Icons)
-        const CheckCircle2 = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        );
-        const XCircle = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-        );
-        const Award = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-        );
-        const BookOpen = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
-        );
-        const PenTool = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 19 7-7 3 3-7 7-3-3z"></path><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="m2 2 7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>
-        );
-        const RefreshCw = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
-        );
-        const Globe = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-        );
-        const Microscope = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
-        );
-        const Calculator = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>
-        );
-        const BookMarked = ({ size = 24, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path><polyline points="10 2 10 10 13 7 16 10 16 2"></polyline></svg>
-        );
+        const CheckCircle2 = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>;
+        const XCircle = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>;
+        const Award = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>;
+        const BookOpen = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>;
+        const PenTool = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m12 19 7-7 3 3-7 7-3-3z"></path><path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="m2 2 7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>;
+        const RefreshCw = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>;
+        const Globe = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>;
+        const Microscope = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>;
+        const Calculator = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect width="16" height="20" x="4" y="2" rx="2"></rect><line x1="8" x2="16" y1="6" y2="6"></line><line x1="16" x2="16" y1="14" y2="18"></line><path d="M16 10h.01"></path><path d="M12 10h.01"></path><path d="M8 10h.01"></path><path d="M12 14h.01"></path><path d="M8 14h.01"></path><path d="M12 18h.01"></path><path d="M8 18h.01"></path></svg>;
+        const BookMarked = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path><polyline points="10 2 10 10 13 7 16 10 16 2"></polyline></svg>;
+        const Leaf = ({ size = 24, className = "" }) => <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>;
 
         // --- CÁC COMPONENT ĐẶC TRƯNG ---
-        
         const Frac = ({ n, d }) => (
             <span className="inline-flex flex-col items-center justify-center align-middle mx-1 font-bold text-emerald-800" style={{ fontSize: '1em', lineHeight: '1.2' }}>
                 <span className="border-b-[2.5px] border-emerald-800 px-1 w-full text-center pb-0.5">{n}</span>
@@ -65,36 +45,15 @@
             };
             const colors = themeMap[colorTheme] || themeMap.emerald;
             const disabledClass = disabled ? `opacity-70 cursor-not-allowed bg-transparent ${colors.split(' ')[4]}` : '';
-
-            return (
-                <input 
-                    type="text" 
-                    value={value || ''} 
-                    onChange={(e) => onChange(e.target.value)} 
-                    disabled={disabled}
-                    className={`h-10 px-2 text-center border-b-2 border-dashed focus:border-solid outline-none font-bold text-xl transition-all ${colors} ${disabledClass} ${className}`}
-                />
-            );
+            return <input type="text" value={value || ''} onChange={(e) => onChange(e.target.value)} disabled={disabled} className={`h-10 px-2 text-center border-b-2 border-dashed focus:border-solid outline-none font-bold text-xl transition-all ${colors} ${disabledClass} ${className}`} />;
         };
 
         const InlineSignInput = ({ value, onChange, disabled }) => (
-            <input 
-                type="text" 
-                value={value || ''} 
-                onChange={(e) => onChange(e.target.value)} 
-                disabled={disabled}
-                className={`w-12 h-12 text-center border-2 border-emerald-400 rounded-lg focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 text-emerald-900 font-bold text-2xl transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`}
-            />
+            <input type="text" value={value || ''} onChange={(e) => onChange(e.target.value)} disabled={disabled} className={`w-12 h-12 text-center border-2 border-emerald-400 rounded-lg focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 text-emerald-900 font-bold text-2xl transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`} />
         );
 
         const MathLightInput = ({ value, onChange, disabled }) => (
-            <input 
-                type="text" 
-                value={value || ''} 
-                onChange={(e) => onChange(e.target.value)} 
-                disabled={disabled}
-                className={`w-10 h-10 md:w-12 md:h-12 text-center border-2 border-emerald-400 rounded-lg font-bold text-xl text-emerald-900 focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`}
-            />
+            <input type="text" value={value || ''} onChange={(e) => onChange(e.target.value)} disabled={disabled} className={`w-10 h-10 md:w-12 md:h-12 text-center border-2 border-emerald-400 rounded-lg font-bold text-xl text-emerald-900 focus:border-emerald-600 outline-none bg-white focus:bg-emerald-50 transition-all shadow-sm ${disabled ? 'opacity-70 cursor-not-allowed bg-gray-50' : ''}`} />
         );
 
         const FractionInputLight = ({ prefix, answers, onChange, submitted }) => (
@@ -106,13 +65,7 @@
         );
 
         const MathDarkInput = ({ value, onChange, disabled }) => (
-            <input 
-                type="text" 
-                value={value || ''} 
-                onChange={(e) => onChange(e.target.value)} 
-                disabled={disabled}
-                className={`w-12 h-12 md:w-16 md:h-14 text-center bg-[#2a3449] border-2 border-[#3b4b68] rounded-lg font-bold text-xl text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`}
-            />
+            <input type="text" value={value || ''} onChange={(e) => onChange(e.target.value)} disabled={disabled} className={`w-12 h-12 md:w-16 md:h-14 text-center bg-[#2a3449] border-2 border-[#3b4b68] rounded-lg font-bold text-xl text-white focus:border-blue-400 focus:ring-1 focus:ring-blue-400 outline-none transition-all ${disabled ? 'opacity-70 cursor-not-allowed' : ''}`} />
         );
 
         const FractionAddDark = ({ prefix, op, answers, onChange, submitted }) => (
@@ -152,19 +105,15 @@
             <div className="flex items-center gap-3 md:gap-5 shrink-0 bg-[#151c2c] p-4 md:p-6 rounded-xl font-sans">
                 <div className="flex flex-col gap-2 items-center">
                     <div className="flex items-center gap-2 text-slate-400 text-2xl">
-                        <span>(</span>
-                        <MathDarkInput value={answers[prefix+'n1']} onChange={(v) => onChange(prefix+'n1', v)} disabled={submitted} />
+                        <span>(</span><MathDarkInput value={answers[prefix+'n1']} onChange={(v) => onChange(prefix+'n1', v)} disabled={submitted} />
                         <span className="font-bold text-slate-300 text-xl">{op}</span>
-                        <MathDarkInput value={answers[prefix+'n2']} onChange={(v) => onChange(prefix+'n2', v)} disabled={submitted} />
-                        <span>)</span>
+                        <MathDarkInput value={answers[prefix+'n2']} onChange={(v) => onChange(prefix+'n2', v)} disabled={submitted} /><span>)</span>
                     </div>
                     <div className="w-full h-1 bg-white rounded-full"></div>
                     <div className="flex items-center gap-2 text-slate-400 text-2xl">
-                        <span>(</span>
-                        <MathDarkInput value={answers[prefix+'d1']} onChange={(v) => onChange(prefix+'d1', v)} disabled={submitted} />
+                        <span>(</span><MathDarkInput value={answers[prefix+'d1']} onChange={(v) => onChange(prefix+'d1', v)} disabled={submitted} />
                         <span className="font-bold text-slate-300 text-xl">{op}</span>
-                        <MathDarkInput value={answers[prefix+'d2']} onChange={(v) => onChange(prefix+'d2', v)} disabled={submitted} />
-                        <span>)</span>
+                        <MathDarkInput value={answers[prefix+'d2']} onChange={(v) => onChange(prefix+'d2', v)} disabled={submitted} /><span>)</span>
                     </div>
                 </div>
                 <span className="text-3xl font-bold text-blue-400 mx-2">=</span>
@@ -176,97 +125,42 @@
             </div>
         );
 
-        // Component Lưới Vẽ Hình Thoi
         const GridDrawing = ({ prefix, answers, onChange, submitted }) => {
-            const step = 30; // Kích thước mỗi ô vuông (pixels)
-            const cols = 20;
-            const rows = 8;
-            const width = cols * step;
-            const height = rows * step;
-
+            const step = 30; const cols = 20; const rows = 8;
+            const width = cols * step; const height = rows * step;
             const points = answers[prefix + '_points'] ? JSON.parse(answers[prefix + '_points']) : [];
 
             const handleClick = (e) => {
                 if (submitted) return;
                 const rect = e.currentTarget.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                // Căn lề vào điểm giao nhau gần nhất của lưới
-                const snapX = Math.round(x / step) * step;
-                const snapY = Math.round(y / step) * step;
-
-                // Kiểm tra giới hạn lưới
+                const x = e.clientX - rect.left; const y = e.clientY - rect.top;
+                const snapX = Math.round(x / step) * step; const snapY = Math.round(y / step) * step;
                 if (snapX >= 0 && snapX <= width && snapY >= 0 && snapY <= height) {
                     const newPoints = [...points, {x: snapX, y: snapY}];
                     onChange(prefix + '_points', JSON.stringify(newPoints));
                 }
             };
-
-            const handleClear = () => {
-                if (submitted) return;
-                onChange(prefix + '_points', JSON.stringify([]));
-            };
+            const handleClear = () => { if (submitted) return; onChange(prefix + '_points', JSON.stringify([])); };
 
             return (
                 <div className="flex flex-col gap-4 mt-4">
                     <p className="text-sm text-emerald-700 italic bg-emerald-50 inline-block px-4 py-2 rounded-full border border-emerald-200">
                         💡 <b>Hướng dẫn vẽ:</b> Hãy nhấp chuột (hoặc chạm) vào các điểm giao nhau trên lưới bên dưới để vẽ từng đỉnh của hình thoi nhé! Lưới mô phỏng giấy ô li (mỗi ô vuông là 1 cm).
                     </p>
-                    
                     <div className="relative border-2 border-emerald-300 rounded overflow-x-auto overflow-y-hidden bg-white shadow-inner">
                         <svg width={width} height={height} onClick={handleClick} className={`cursor-crosshair ${submitted ? '' : 'hover:bg-emerald-50/20'} transition-colors`} style={{ minWidth: `${width}px` }}>
-                            <defs>
-                                <pattern id="dotGrid" width={step} height={step} patternUnits="userSpaceOnUse">
-                                    <path d={`M ${step} 0 L 0 0 0 ${step}`} fill="none" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 2"/>
-                                </pattern>
-                            </defs>
+                            <defs><pattern id="dotGrid" width={step} height={step} patternUnits="userSpaceOnUse"><path d={`M ${step} 0 L 0 0 0 ${step}`} fill="none" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 2"/></pattern></defs>
                             <rect width="100%" height="100%" fill="url(#dotGrid)" />
-                            
-                            {/* Vẽ đường nối */}
-                            {points.length > 1 && (
-                                <polyline
-                                    points={points.map(p => `${p.x},${p.y}`).join(' ')}
-                                    fill={points.length >= 4 ? "rgba(16, 185, 129, 0.1)" : "none"}
-                                    stroke="#059669"
-                                    strokeWidth="3"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                />
-                            )}
-                            {/* Vẽ nét đứt đóng khung nếu đã có từ 3 điểm trở lên (để dễ hình dung) */}
-                            {points.length > 2 && (
-                                <line 
-                                    x1={points[points.length-1].x} y1={points[points.length-1].y} 
-                                    x2={points[0].x} y2={points[0].y} 
-                                    stroke="#059669" strokeWidth="3" strokeDasharray="6 4" opacity="0.5"
-                                />
-                            )}
-                            
-                            {/* Vẽ các điểm đỉnh */}
-                            {points.map((p, i) => (
-                                <circle key={i} cx={p.x} cy={p.y} r="5" fill="#047857" className="shadow-sm" />
-                            ))}
+                            {points.length > 1 && <polyline points={points.map(p => `${p.x},${p.y}`).join(' ')} fill={points.length >= 4 ? "rgba(16, 185, 129, 0.1)" : "none"} stroke="#059669" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />}
+                            {points.length > 2 && <line x1={points[points.length-1].x} y1={points[points.length-1].y} x2={points[0].x} y2={points[0].y} stroke="#059669" strokeWidth="3" strokeDasharray="6 4" opacity="0.5" />}
+                            {points.map((p, i) => <circle key={i} cx={p.x} cy={p.y} r="5" fill="#047857" className="shadow-sm" />)}
                         </svg>
                     </div>
-                    
                     <div className="flex flex-col sm:flex-row sm:items-center gap-4 mt-2">
-                        {!submitted && (
-                            <button onClick={handleClear} className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2">
-                                <RefreshCw size={16} /> Xoá hình vẽ lại
-                            </button>
-                        )}
+                        {!submitted && <button onClick={handleClear} className="bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 px-4 py-2 rounded-lg font-bold text-sm transition-colors flex items-center justify-center gap-2"><RefreshCw size={16} /> Xoá hình vẽ lại</button>}
                         <div className="flex items-center gap-3 ml-auto">
                             <span className="font-bold text-slate-700">Tên hình thoi:</span>
-                            <input 
-                                type="text" 
-                                value={answers[prefix + '_name'] || ''}
-                                onChange={e => onChange(prefix + '_name', e.target.value)}
-                                disabled={submitted}
-                                className="h-10 w-28 px-3 text-center border-2 border-emerald-300 focus:border-emerald-500 rounded-lg outline-none font-bold text-emerald-900 uppercase tracking-widest shadow-sm"
-                                placeholder="VD: ABCD"
-                                maxLength="4"
-                            />
+                            <input type="text" value={answers[prefix + '_name'] || ''} onChange={e => onChange(prefix + '_name', e.target.value)} disabled={submitted} className="h-10 w-28 px-3 text-center border-2 border-emerald-300 focus:border-emerald-500 rounded-lg outline-none font-bold text-emerald-900 uppercase tracking-widest shadow-sm" placeholder="VD: ABCD" maxLength="4"/>
                         </div>
                     </div>
                 </div>
@@ -323,10 +217,36 @@
             </svg>
         );
 
+        const MushroomSvg = () => (
+            <svg width="100%" height="auto" viewBox="0 0 200 200" className="max-w-[200px] mx-auto bg-white border border-teal-200 rounded-xl shadow-sm p-4">
+                <path d="M80,180 Q100,200 120,180 Q110,160 100,180 Q90,160 80,180" fill="#a1a1aa" stroke="#52525b" strokeWidth="2"/>
+                <line x1="110" y1="180" x2="160" y2="180" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                <circle cx="175" cy="180" r="12" fill="#3b82f6" />
+                <text x="170" y="186" fill="white" fontWeight="bold" fontSize="16">3</text>
+                
+                <rect x="85" y="80" width="30" height="100" rx="10" fill="#fef08a" stroke="#ca8a04" strokeWidth="2" />
+                <line x1="115" y1="120" x2="160" y2="120" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                <circle cx="175" cy="120" r="12" fill="#22c55e" />
+                <text x="170" y="126" fill="white" fontWeight="bold" fontSize="16">2</text>
+                
+                <path d="M40,80 Q100,0 160,80 Z" fill="#ef4444" stroke="#b91c1c" strokeWidth="2"/>
+                <circle cx="70" cy="50" r="6" fill="#ffffff" opacity="0.9"/><circle cx="100" cy="30" r="8" fill="#ffffff" opacity="0.9"/><circle cx="130" cy="60" r="5" fill="#ffffff" opacity="0.9"/>
+                <line x1="130" y1="40" x2="160" y2="40" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                <circle cx="175" cy="40" r="12" fill="#ef4444" />
+                <text x="170" y="46" fill="white" fontWeight="bold" fontSize="16">1</text>
+            </svg>
+        );
+
+
         // --- DỮ LIỆU ĐỀ THI TỔNG HỢP ---
         const q4Options = ["qua đời", "vật chất", "trưởng thành", "tinh thần", "sinh ra"];
         const q4Answers = { q4_1: "tinh thần", q4_2: "sinh ra", q4_3: "trưởng thành" };
+        
         const khoaHocAnswers = { step1: "Lựa chọn chi tiết và dụng cụ", step2: "Lắp ghép chân cầu", step3: "Lắp ghép mặt cầu và thành cầu", step4: "Lắp ghép hoàn chỉnh và kiểm tra mô hình" };
+        
+        const kh2_q5Options = ["uống nhiều", "thường xuyên", "ăn uống thừa", "ăn ít"];
+        const kh2_q5Answers = { a: "ăn uống thừa", b: "thường xuyên", c: "ăn ít", d: "uống nhiều" };
+        const kh2_q6Answers = { kh2_s1: "Mũ nấm", kh2_s2: "Thân nấm", kh2_s3: "Chân nấm" };
 
         const quizData = {
           lichSu: {
@@ -360,65 +280,52 @@
             ],
             tuLuan: [
               { id: 'kh_tl1', question: 'Câu 1 (1 điểm). Theo em tiêu chí lắp ghép mô hình kĩ thuật là gì?', hint: '- Đầy đủ các bộ phận.\n- Mối ghép chắc chắn đúng vị trí.' },
-              { 
-                id: 'kh_tl2', 
-                question: <div>Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật có trong hình ảnh dưới đây.</div>,
+              { id: 'kh_tl2', question: <div>Câu 2 (1 điểm). Em hãy nêu tác dụng của các dụng cụ trong bộ lắp ghép kĩ thuật có trong hình ảnh dưới đây.</div>,
                 renderCustomInput: (answers, onChange, submitted) => (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                         <div className="flex flex-col gap-4">
                             <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
                                 <svg width="150" height="40" viewBox="0 0 150 40" xmlns="http://www.w3.org/2000/svg">
-                                    <rect x="10" y="10" width="60" height="20" rx="4" fill="#dc2626" />
-                                    <rect x="70" y="16" width="50" height="8" fill="#cbd5e1" />
-                                    <polygon points="120,16 140,18 140,22 120,24" fill="#64748b" />
-                                    <line x1="20" y1="10" x2="20" y2="30" stroke="#991b1b" strokeWidth="2"/>
-                                    <line x1="30" y1="10" x2="30" y2="30" stroke="#991b1b" strokeWidth="2"/>
-                                    <line x1="40" y1="10" x2="40" y2="30" stroke="#991b1b" strokeWidth="2"/>
-                                    <line x1="50" y1="10" x2="50" y2="30" stroke="#991b1b" strokeWidth="2"/>
-                                    <line x1="60" y1="10" x2="60" y2="30" stroke="#991b1b" strokeWidth="2"/>
+                                    <rect x="10" y="10" width="60" height="20" rx="4" fill="#dc2626" /><rect x="70" y="16" width="50" height="8" fill="#cbd5e1" /><polygon points="120,16 140,18 140,22 120,24" fill="#64748b" />
+                                    <line x1="20" y1="10" x2="20" y2="30" stroke="#991b1b" strokeWidth="2"/><line x1="30" y1="10" x2="30" y2="30" stroke="#991b1b" strokeWidth="2"/><line x1="40" y1="10" x2="40" y2="30" stroke="#991b1b" strokeWidth="2"/><line x1="50" y1="10" x2="50" y2="30" stroke="#991b1b" strokeWidth="2"/><line x1="60" y1="10" x2="60" y2="30" stroke="#991b1b" strokeWidth="2"/>
                                 </svg>
                             </div>
                             <div className="font-bold text-xl text-center text-gray-800">Tua – vít</div>
-                            <div className="w-full flex items-start gap-3 text-lg">
-                                <span className="font-bold mt-2 text-indigo-700">a)</span>
-                                <textarea
-                                    disabled={submitted}
-                                    value={answers['kh_tl2_a'] || ''}
-                                    onChange={(e) => onChange('kh_tl2_a', e.target.value)}
-                                    className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all"
-                                    placeholder="Tác dụng của tua-vít..."
-                                />
-                            </div>
+                            <div className="w-full flex items-start gap-3 text-lg"><span className="font-bold mt-2 text-indigo-700">a)</span><textarea disabled={submitted} value={answers['kh_tl2_a'] || ''} onChange={(e) => onChange('kh_tl2_a', e.target.value)} className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all" placeholder="Tác dụng của tua-vít..." /></div>
                         </div>
                         <div className="flex flex-col gap-4">
                             <div className="h-24 flex items-center justify-center bg-gray-50 rounded-xl border border-gray-200">
                                 <svg width="150" height="40" viewBox="0 0 150 40">
-                                    <rect x="30" y="14" width="90" height="12" rx="4" fill="#94a3b8" />
-                                    <circle cx="25" cy="20" r="16" fill="#94a3b8" />
-                                    <circle cx="20" cy="20" r="10" fill="#f9fafb" />
-                                    <rect x="0" y="15" width="25" height="10" fill="#f9fafb" />
-                                    <circle cx="125" cy="20" r="14" fill="#94a3b8" />
-                                    <polygon points="118,14 132,14 139,20 132,26 118,26 111,20" fill="#f9fafb" />
+                                    <rect x="30" y="14" width="90" height="12" rx="4" fill="#94a3b8" /><circle cx="25" cy="20" r="16" fill="#94a3b8" /><circle cx="20" cy="20" r="10" fill="#f9fafb" /><rect x="0" y="15" width="25" height="10" fill="#f9fafb" /><circle cx="125" cy="20" r="14" fill="#94a3b8" /><polygon points="118,14 132,14 139,20 132,26 118,26 111,20" fill="#f9fafb" />
                                 </svg>
                             </div>
                             <div className="font-bold text-xl text-center text-gray-800">Cờ – lê</div>
-                            <div className="w-full flex items-start gap-3 text-lg">
-                                <span className="font-bold mt-2 text-indigo-700">b)</span>
-                                <textarea
-                                    disabled={submitted}
-                                    value={answers['kh_tl2_b'] || ''}
-                                    onChange={(e) => onChange('kh_tl2_b', e.target.value)}
-                                    className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all"
-                                    placeholder="Tác dụng của cờ-lê..."
-                                />
-                            </div>
+                            <div className="w-full flex items-start gap-3 text-lg"><span className="font-bold mt-2 text-indigo-700">b)</span><textarea disabled={submitted} value={answers['kh_tl2_b'] || ''} onChange={(e) => onChange('kh_tl2_b', e.target.value)} className="flex-1 border-2 border-indigo-100 rounded-xl focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none bg-white p-3 leading-relaxed resize-none min-h-[100px] transition-all" placeholder="Tác dụng của cờ-lê..." /></div>
                         </div>
                     </div>
-                ),
-                hint: <div>a) Tua-vít: Có tác dụng để vặn vít.<br/><br/>b) Cờ-lê: Có tác dụng để giữ ốc.</div> 
+                ), hint: <div>a) Tua-vít: Có tác dụng để vặn vít.<br/><br/>b) Cờ-lê: Có tác dụng để giữ ốc.</div> 
               },
               { id: 'kh_tl3', question: 'Câu 3 (1 điểm). Kể tên 2 đồ chơi dân gian mà em biết.', hint: 'Ví dụ: Tò he, Đèn ông sao, Diều giấy, Chong chóng...' },
               { id: 'kh_tl4', question: 'Câu 4 (2 điểm). Các bộ phận chính của diều giấy là gì?', hint: 'Các bộ phận chính của diều giấy là:\n- Thân diều\n- Cánh diều\n- Đuôi diều ngắn\n- Đuôi diều dài\n- Dây diều' }
+            ]
+          },
+          khoaHoc2: {
+            title: "Khoa học (Tự nhiên) lớp 4 - Đề 2",
+            theme: "teal", maxScoreTN: 6.0, maxScoreTL: 4.0,
+            matchingOptions: [ "Thân nấm", "Mũ nấm", "Chân nấm" ],
+            tracNghiem: [
+              { id: 'kh2_q1', question: 'Câu 1 (0.5đ). Môi trường sống của nấm là gì?', options: { A: 'Chỉ sống trên cạn', B: 'Chỉ sống dưới nước', C: 'Chỉ sống nơi ẩm ướt như đất ẩm, rơm rạ, thức ăn, hoa quả,...', D: 'Sống được dưới nước và trên cạn.' }, correct: 'C', score: 0.5 },
+              { id: 'kh2_q2', question: 'Câu 2 (0.5đ). Chúng ta nên ăn thức ăn như thế nào?', options: { A: 'Ăn phối hợp đầy đủ các loại.', B: 'Ăn nhiều thức ăn chứa chất béo', C: 'Chỉ ăn đạm và bột đường', D: 'Chỉ ăn chất xơ' }, correct: 'A', score: 0.5 },
+              { id: 'kh2_q3', question: 'Câu 3 (0.5đ). Cơm là thực phẩm thuộc nhóm nào?', options: { A: 'Chất đạm', B: 'Chất khoáng', C: 'Chất béo', D: 'Chất bột đường' }, correct: 'D', score: 0.5 },
+              { id: 'kh2_q4', question: 'Câu 4 (1đ). Triệu chứng khi ăn phải nấm độc là:', options: { A: 'Đau bụng, buồn nôn, chóng mặt, khó thở', B: 'Bình thường', C: 'Đau tay, đau chân', D: 'Đau mắt' }, correct: 'A', score: 1.0 },
+              { id: 'kh2_q5_special', type: 'dien_khuyet_kh2' },
+              { id: 'kh2_q6_special', type: 'noi_buoc_kh2' }
+            ],
+            tuLuan: [
+              { id: 'kh2_tl1', question: 'Câu 1 (1 điểm). Kể tên một số cách bảo quản thực phẩm.', hint: 'Một số cách bảo quản thực phẩm: Ướp lạnh, ướp mặn, sấy khô, đóng hộp...' },
+              { id: 'kh2_tl2', question: 'Câu 2 (1 điểm). Theo em thực phẩm như thế nào là an toàn?', hint: 'Thực phẩm an toàn là thực phẩm không gây hại đến sức khỏe con người.' },
+              { id: 'kh2_tl3', question: 'Câu 3 (1 điểm). Kể tên một số loại thực phẩm giàu chất đạm.', hint: 'Một số loại thực phẩm giàu chất đạm: Tôm, trứng, lạc...' },
+              { id: 'kh2_tl4', question: 'Câu 4 (1 điểm). Để phòng tránh đuối nước em cần làm gì?', hint: 'Để phòng tránh đuối nước em cần:\n+ Mặc áo phao khi đi thuyền, đò và khi đi tắm biển.\n+ Không chơi đùa quanh ao, hồ, hố nước sâu.\n+ Không đi bơi một mình.\n+ Thực hiện các nguyên tắc an toàn khi bơi và tập bơi.' }
             ]
           },
           toan: {
@@ -510,44 +417,29 @@
                         <div><b>Bài giải:</b></div>
                         <div className="flex flex-col gap-4">
                             <div className="flex items-end gap-2 w-full">
-                                <input 
-                                    type="text" value={answers['t_tl6_text1'] || ''} onChange={(e) => onChange('t_tl6_text1', e.target.value)} disabled={submitted}
-                                    placeholder="Nhập lời giải thứ nhất vào đây..."
-                                    className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all"
-                                />
+                                <input type="text" value={answers['t_tl6_text1'] || ''} onChange={(e) => onChange('t_tl6_text1', e.target.value)} disabled={submitted} placeholder="Nhập lời giải thứ nhất vào đây..." className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all" />
                                 <span className="font-bold">:</span>
                             </div>
                             <div className="flex flex-wrap items-center gap-3 ml-4 md:ml-8">
-                                <FractionInputLight prefix="t_tl6_f1" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-2xl font-bold text-emerald-700">+</span>
-                                <FractionInputLight prefix="t_tl6_f2" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-2xl font-bold text-emerald-700">=</span>
-                                <FractionInputLight prefix="t_tl6_f3" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-lg font-bold text-slate-700">(kg)</span>
+                                <FractionInputLight prefix="t_tl6_f1" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-2xl font-bold text-emerald-700">+</span>
+                                <FractionInputLight prefix="t_tl6_f2" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-2xl font-bold text-emerald-700">=</span>
+                                <FractionInputLight prefix="t_tl6_f3" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-lg font-bold text-slate-700">(kg)</span>
                             </div>
                         </div>
                         <div className="flex flex-col gap-4 mt-2">
                             <div className="flex items-end gap-2 w-full">
-                                <input 
-                                    type="text" value={answers['t_tl6_text2'] || ''} onChange={(e) => onChange('t_tl6_text2', e.target.value)} disabled={submitted}
-                                    placeholder="Nhập lời giải thứ hai vào đây..."
-                                    className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all"
-                                />
+                                <input type="text" value={answers['t_tl6_text2'] || ''} onChange={(e) => onChange('t_tl6_text2', e.target.value)} disabled={submitted} placeholder="Nhập lời giải thứ hai vào đây..." className="flex-1 h-10 px-2 border-b-2 border-dashed border-emerald-400 focus:border-solid focus:border-emerald-600 outline-none bg-transparent text-emerald-900 font-medium text-lg transition-all" />
                                 <span className="font-bold">:</span>
                             </div>
                             <div className="flex flex-wrap items-center gap-3 ml-4 md:ml-8">
-                                <FractionInputLight prefix="t_tl6_f4" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-2xl font-bold text-emerald-700">+</span>
-                                <FractionInputLight prefix="t_tl6_f5" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-2xl font-bold text-emerald-700">=</span>
-                                <FractionInputLight prefix="t_tl6_f6" answers={answers} onChange={onChange} submitted={submitted} />
-                                <span className="text-lg font-bold text-slate-700">(kg)</span>
+                                <FractionInputLight prefix="t_tl6_f4" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-2xl font-bold text-emerald-700">+</span>
+                                <FractionInputLight prefix="t_tl6_f5" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-2xl font-bold text-emerald-700">=</span>
+                                <FractionInputLight prefix="t_tl6_f6" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-lg font-bold text-slate-700">(kg)</span>
                             </div>
                         </div>
                         <div className="flex flex-wrap items-center gap-4 mt-6 pt-4 border-t border-emerald-200">
                             <b className="text-xl">Đáp số:</b>
-                            <FractionInputLight prefix="t_tl6_f7" answers={answers} onChange={onChange} submitted={submitted} />
-                            <span className="text-lg font-bold text-slate-700">ki-lô-gam.</span>
+                            <FractionInputLight prefix="t_tl6_f7" answers={answers} onChange={onChange} submitted={submitted} /><span className="text-lg font-bold text-slate-700">ki-lô-gam.</span>
                         </div>
                     </div>
                 ),
@@ -655,7 +547,7 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
         };
 
         // Component xử lý dạng câu hỏi Nối 2 Cột
-        const MatchingQuestion = ({ answers, setAnswers, submitted, khoaHocAnswers, matchingOptions }) => {
+        const MatchingQuestion = ({ answers, setAnswers, submitted, matchingOptions }) => {
             const [selectedMatch, setSelectedMatch] = useState(null);
             const containerRef = useRef(null);
             const leftRefs = useRef({});
@@ -793,16 +685,165 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
             );
         };
 
+        const MushroomMatching = ({ answers, setAnswers, submitted, matchingOptions }) => {
+            const [selectedMatch, setSelectedMatch] = useState(null);
+            const containerRef = useRef(null);
+            const leftRefs = useRef({});
+            const rightRefs = useRef({});
+            const [lines, setLines] = useState([]);
+
+            const matchColors = {
+                kh2_s1: { bg: 'bg-red-100', border: 'border-red-500', text: 'text-red-800', badge: 'bg-red-500', ring: 'ring-red-300', stroke: '#ef4444' },
+                kh2_s2: { bg: 'bg-green-100', border: 'border-green-500', text: 'text-green-800', badge: 'bg-green-500', ring: 'ring-green-300', stroke: '#22c55e' },
+                kh2_s3: { bg: 'bg-blue-100', border: 'border-blue-500', text: 'text-blue-800', badge: 'bg-blue-500', ring: 'ring-blue-300', stroke: '#3b82f6' }
+            };
+            const steps = [ { id: 'kh2_s1', label: 'Vị trí 1 (Màu đỏ)' }, { id: 'kh2_s2', label: 'Vị trí 2 (Màu xanh)' }, { id: 'kh2_s3', label: 'Vị trí 3 (Màu dương)' } ];
+
+            const updateLines = () => {
+                if (!containerRef.current) return;
+                const containerRect = containerRef.current.getBoundingClientRect();
+                const newLines = [];
+                steps.forEach(step => {
+                    const answer = answers[step.id];
+                    if (answer && leftRefs.current[step.id] && rightRefs.current[answer]) {
+                        const lRect = leftRefs.current[step.id].getBoundingClientRect();
+                        const rRect = rightRefs.current[answer].getBoundingClientRect();
+                        let x1, y1, x2, y2;
+                        if (lRect.bottom < rRect.top) { 
+                            x1 = lRect.left + lRect.width / 2 - containerRect.left; y1 = lRect.bottom - containerRect.top;
+                            x2 = rRect.left + rRect.width / 2 - containerRect.left; y2 = rRect.top - containerRect.top;
+                        } else {
+                            x1 = lRect.right - containerRect.left; y1 = lRect.top + lRect.height / 2 - containerRect.top;
+                            x2 = rRect.left - containerRect.left; y2 = rRect.top + rRect.height / 2 - containerRect.top;
+                        }
+                        newLines.push({ id: step.id, x1, y1, x2, y2, color: matchColors[step.id].stroke });
+                    }
+                });
+                setLines(newLines);
+            };
+
+            useEffect(() => {
+                const timer = setTimeout(updateLines, 50);
+                window.addEventListener('resize', updateLines);
+                return () => { clearTimeout(timer); window.removeEventListener('resize', updateLines); };
+            }, [answers, submitted]);
+
+            const handleOptionClick = (opt) => {
+                if (submitted) return;
+                if (selectedMatch) {
+                    setAnswers(prev => {
+                        const newAnswers = { ...prev };
+                        steps.forEach(s => { if (newAnswers[s.id] === opt) newAnswers[s.id] = null; });
+                        newAnswers[selectedMatch] = opt;
+                        return newAnswers;
+                    });
+                    setSelectedMatch(null);
+                } else {
+                    setAnswers(prev => {
+                        const newAnswers = { ...prev };
+                        let changed = false;
+                        steps.forEach(s => {
+                            if (newAnswers[s.id] === opt) { newAnswers[s.id] = null; changed = true; }
+                        });
+                        return changed ? newAnswers : prev;
+                    });
+                }
+            };
+
+            return (
+                <div className="bg-teal-50/50 p-5 rounded-xl border border-teal-100 shadow-sm overflow-hidden">
+                    <p className="font-semibold text-lg mb-2 text-gray-800">Câu 6 (1.5 điểm). Nối tên một số bộ phận bên ngoài của nấm trong hình dưới đây.</p>
+                    <p className="text-sm text-gray-600 mb-6 italic bg-white inline-block px-3 py-1 rounded-full border border-gray-200">💡 <b>Hướng dẫn:</b> Nhấn chọn "Vị trí" ở hình cây nấm, sau đó chọn tên gọi tương ứng ở cột bên cạnh.</p>
+                    <div className="relative flex flex-col md:flex-row gap-8 md:gap-20 items-center" ref={containerRef}>
+                        <svg className="absolute top-0 left-0 w-full h-full pointer-events-none" style={{ zIndex: 1, overflow: 'visible' }}>
+                            {lines.map(line => (
+                                <line key={`line-${line.id}`} x1={line.x1} y1={line.y1} x2={line.x2} y2={line.y2} stroke={line.color} strokeWidth="4" strokeLinecap="round" style={{ filter: 'drop-shadow(0px 2px 2px rgba(0,0,0,0.2))', transition: 'all 0.3s ease' }} />
+                            ))}
+                        </svg>
+                        <div className="flex-1 relative z-10 w-full max-w-[250px] mx-auto bg-white border border-teal-200 rounded-xl shadow-sm p-4 pb-6">
+                            <svg width="100%" height="auto" viewBox="0 0 200 200" className="block">
+                                <path d="M80,180 Q100,200 120,180 Q110,160 100,180 Q90,160 80,180" fill="#a1a1aa" stroke="#52525b" strokeWidth="2"/>
+                                <line x1="110" y1="180" x2="160" y2="180" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                                
+                                <rect x="85" y="80" width="30" height="100" rx="10" fill="#fef08a" stroke="#ca8a04" strokeWidth="2" />
+                                <line x1="115" y1="120" x2="160" y2="120" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                                
+                                <path d="M40,80 Q100,0 160,80 Z" fill="#ef4444" stroke="#b91c1c" strokeWidth="2"/>
+                                <circle cx="70" cy="50" r="6" fill="#ffffff" opacity="0.9"/><circle cx="100" cy="30" r="8" fill="#ffffff" opacity="0.9"/><circle cx="130" cy="60" r="5" fill="#ffffff" opacity="0.9"/>
+                                <line x1="130" y1="40" x2="160" y2="40" stroke="#475569" strokeWidth="2" strokeDasharray="4" />
+                            </svg>
+                            {/* Nút bấm vị trí đè lên SVG */}
+                            <div className="absolute top-0 right-0 h-full flex flex-col justify-between py-6">
+                                {steps.map((step, idx) => {
+                                    const posClasses = ["top-[32px] right-2", "top-[106px] right-2", "bottom-[20px] right-2"];
+                                    const isSelected = selectedMatch === step.id; const hasAnswer = answers[step.id]; const colorScheme = matchColors[step.id];
+                                    let btnClass = `absolute ${posClasses[idx]} w-10 h-10 rounded-full font-bold text-white transition-all shadow-md flex items-center justify-center `;
+                                    if (submitted) {
+                                        btnClass += hasAnswer ? `${colorScheme.bg} text-${colorScheme.text.split('-')[1]}-800 border-2 ${colorScheme.border} opacity-90 cursor-default` : "bg-gray-200 text-gray-500 opacity-90 cursor-default";
+                                    } else {
+                                        if (isSelected) btnClass += `bg-white ${colorScheme.text} border-4 ${colorScheme.border} ring-4 ${colorScheme.ring} transform scale-110`;
+                                        else if (hasAnswer) btnClass += `${colorScheme.bg} text-${colorScheme.text.split('-')[1]}-800 border-2 ${colorScheme.border} hover:opacity-80`;
+                                        else btnClass += `${colorScheme.badge} hover:brightness-110`;
+                                    }
+                                    return <button key={step.id} ref={el => leftRefs.current[step.id] = el} disabled={submitted} onClick={() => setSelectedMatch(step.id === selectedMatch ? null : step.id)} className={btnClass}>{idx + 1}</button>
+                                })}
+                            </div>
+                        </div>
+                        <div className="flex-[2] flex flex-col gap-5 relative z-10 w-full">
+                            <div className="font-bold text-center text-gray-700 bg-gray-200 py-2 rounded mb-1">Tên bộ phận</div>
+                            {matchingOptions.map(opt => {
+                                let assignedStepId = null; steps.forEach(s => { if (answers[s.id] === opt) assignedStepId = s.id; });
+                                const colorScheme = assignedStepId ? matchColors[assignedStepId] : null;
+                                let btnClass = "p-3 rounded-xl border-2 font-medium transition-all text-left flex items-center gap-3 bg-white ";
+                                if (submitted) {
+                                    btnClass += colorScheme ? `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} opacity-90 cursor-default` : "border-gray-300 bg-gray-100 text-gray-500 opacity-90 cursor-default";
+                                } else {
+                                    if (colorScheme) btnClass += `${colorScheme.bg} ${colorScheme.border} ${colorScheme.text} hover:opacity-80`;
+                                    else if (selectedMatch) btnClass += "border-dashed border-teal-400 bg-teal-50 text-teal-800 hover:border-solid hover:shadow-md cursor-pointer";
+                                    else btnClass += "border-gray-300 text-gray-700 hover:bg-gray-50 cursor-pointer";
+                                }
+                                return (
+                                    <button key={opt} ref={el => rightRefs.current[opt] = el} disabled={submitted} onClick={() => handleOptionClick(opt)} className={btnClass}>
+                                        <span className={`w-8 h-8 rounded-full border-2 flex-shrink-0 flex items-center justify-center text-sm font-bold text-white ${colorScheme ? `${colorScheme.badge} border-transparent` : 'border-gray-300 bg-white'}`}>{assignedStepId ? assignedStepId.replace('kh2_s', '') : ''}</span>
+                                        <span className="text-lg">{opt}</span>
+                                    </button>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    {submitted && (
+                        <div className="mt-8 p-4 bg-white rounded-xl border-2 border-gray-100 shadow-sm">
+                            <p className="font-bold text-gray-800 mb-3 flex items-center gap-2"><BookOpen size={20} className="text-teal-500"/> Hướng dẫn đáp án & Kết quả:</p>
+                            <div className="space-y-3">
+                                {steps.map(step => {
+                                    const isCorrect = answers[step.id] === kh2_q6Answers[step.id];
+                                    return (
+                                        <div key={step.id} className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 text-sm bg-gray-50 p-2 rounded">
+                                            <div className="flex items-center gap-2 font-semibold whitespace-nowrap">
+                                                {isCorrect ? <CheckCircle2 size={18} className="text-green-600"/> : <XCircle size={18} className="text-red-600"/>}
+                                                <span className={matchColors[step.id].text}>{step.label}</span>
+                                            </div>
+                                            <span className="hidden sm:inline text-gray-400">→</span>
+                                            <span className={isCorrect ? "text-green-700 font-medium text-base" : "text-gray-600 text-base"}>{answers[step.id] || '(Chưa nối)'}</span>
+                                            {!isCorrect && (<div className="mt-1 sm:mt-0 sm:ml-auto text-red-600 font-medium bg-red-50 px-3 py-1 rounded text-sm border border-red-100">Đúng: {kh2_q6Answers[step.id]}</div>)}
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
         function App() {
-          // KHỞI TẠO STATE TỪ LOCAL STORAGE (Nếu có)
-          const [activeTab, setActiveTab] = useState(() => localStorage.getItem('quiz_activeTab') || 'tiengViet'); 
+          const [activeTab, setActiveTab] = useState(() => localStorage.getItem('quiz_activeTab') || 'khoaHoc2'); 
           const [answers, setAnswers] = useState(() => JSON.parse(localStorage.getItem('quiz_answers')) || {});
           const [submitted, setSubmitted] = useState(() => localStorage.getItem('quiz_submitted') === 'true');
           const [scoreTN, setScoreTN] = useState(() => parseFloat(localStorage.getItem('quiz_scoreTN')) || 0);
 
           const currentData = quizData[activeTab];
 
-          // LƯU STATE VÀO LOCAL STORAGE KHI CÓ THAY ĐỔI
           useEffect(() => {
               localStorage.setItem('quiz_activeTab', activeTab);
               localStorage.setItem('quiz_answers', JSON.stringify(answers));
@@ -836,6 +877,15 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                 if (answers['step2'] === khoaHocAnswers.step2) score += 0.5;
                 if (answers['step3'] === khoaHocAnswers.step3) score += 0.5;
                 if (answers['step4'] === khoaHocAnswers.step4) score += 0.5;
+              } else if (q.type === 'dien_khuyet_kh2') {
+                if (answers['kh2_q5_a'] === kh2_q5Answers.a) score += 0.5;
+                if (answers['kh2_q5_b'] === kh2_q5Answers.b) score += 0.5;
+                if (answers['kh2_q5_c'] === kh2_q5Answers.c) score += 0.5;
+                if (answers['kh2_q5_d'] === kh2_q5Answers.d) score += 0.5;
+              } else if (q.type === 'noi_buoc_kh2') {
+                if (answers['kh2_s1'] === kh2_q6Answers.kh2_s1) score += 0.5;
+                if (answers['kh2_s2'] === kh2_q6Answers.kh2_s2) score += 0.5;
+                if (answers['kh2_s3'] === kh2_q6Answers.kh2_s3) score += 0.5;
               } else {
                 if (answers[q.id] === q.correct) score += q.score;
               }
@@ -845,7 +895,6 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
             window.scrollTo({ top: 0, behavior: 'smooth' });
           };
 
-          // HÀM RESET XOÁ SẠCH DỮ LIỆU CẢ LOCAL STORAGE
           const resetQuiz = () => {
             setAnswers({});
             setSubmitted(false);
@@ -860,6 +909,7 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
               if (currentData.theme === 'emerald') return { header: 'from-emerald-600 to-teal-700', text: 'text-emerald-800', bg: 'bg-emerald-500', btn: 'bg-gradient-to-r from-emerald-600 to-teal-600 shadow-emerald-500/30 hover:shadow-emerald-500/50', border: 'border-emerald-200' };
               if (currentData.theme === 'indigo') return { header: 'from-indigo-600 to-purple-700', text: 'text-indigo-800', bg: 'bg-indigo-500', btn: 'bg-gradient-to-r from-indigo-600 to-purple-600 shadow-indigo-500/30 hover:shadow-indigo-500/50', border: 'border-indigo-200' };
               if (currentData.theme === 'rose') return { header: 'from-rose-500 to-red-600', text: 'text-rose-800', bg: 'bg-rose-500', btn: 'bg-gradient-to-r from-rose-500 to-red-600 shadow-rose-500/30 hover:shadow-rose-500/50', border: 'border-rose-200' };
+              if (currentData.theme === 'teal') return { header: 'from-teal-600 to-emerald-700', text: 'text-teal-800', bg: 'bg-teal-500', btn: 'bg-gradient-to-r from-teal-600 to-emerald-600 shadow-teal-500/30 hover:shadow-teal-500/50', border: 'border-teal-200' };
               return { header: 'from-blue-600 to-indigo-700', text: 'text-blue-800', bg: 'bg-blue-500', btn: 'bg-gradient-to-r from-blue-600 to-indigo-600 shadow-blue-500/30 hover:shadow-blue-500/50', border: 'border-blue-200' };
           };
 
@@ -880,10 +930,11 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                 {/* Tab Menu */}
                 <div className="bg-gray-100 border-b border-gray-200 p-4">
                   <div className="flex flex-wrap justify-center gap-3">
-                    <button onClick={() => handleTabChange('tiengViet')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'tiengViet' ? 'bg-rose-600 text-white shadow-lg scale-105' : 'bg-white text-rose-600 border border-rose-200 hover:bg-rose-50'}`}><BookMarked size={20} /> Tiếng Việt</button>
-                    <button onClick={() => handleTabChange('toan')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'toan' ? 'bg-emerald-600 text-white shadow-lg scale-105' : 'bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50'}`}><Calculator size={20} /> Toán</button>
-                    <button onClick={() => handleTabChange('khoaHoc')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'khoaHoc' ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50'}`}><Microscope size={20} /> Khoa học</button>
-                    <button onClick={() => handleTabChange('lichSu')} className={`px-6 py-3 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'lichSu' ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-white text-blue-600 border border-blue-200 hover:bg-blue-50'}`}><Globe size={20} /> Lịch sử - Địa lí</button>
+                    <button onClick={() => handleTabChange('tiengViet')} className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'tiengViet' ? 'bg-rose-600 text-white shadow-lg scale-105' : 'bg-white text-rose-600 border border-rose-200 hover:bg-rose-50'}`}><BookMarked size={18} /> Tiếng Việt</button>
+                    <button onClick={() => handleTabChange('toan')} className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'toan' ? 'bg-emerald-600 text-white shadow-lg scale-105' : 'bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50'}`}><Calculator size={18} /> Toán</button>
+                    <button onClick={() => handleTabChange('khoaHoc')} className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'khoaHoc' ? 'bg-indigo-600 text-white shadow-lg scale-105' : 'bg-white text-indigo-600 border border-indigo-200 hover:bg-indigo-50'}`}><Microscope size={18} /> Khoa học (Công nghệ)</button>
+                    <button onClick={() => handleTabChange('khoaHoc2')} className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'khoaHoc2' ? 'bg-teal-600 text-white shadow-lg scale-105' : 'bg-white text-teal-600 border border-teal-200 hover:bg-teal-50'}`}><Leaf size={18} /> Khoa học (Tự nhiên)</button>
+                    <button onClick={() => handleTabChange('lichSu')} className={`px-5 py-2.5 rounded-full font-bold flex items-center gap-2 transition-all ${activeTab === 'lichSu' ? 'bg-blue-600 text-white shadow-lg scale-105' : 'bg-white text-blue-600 border border-blue-200 hover:bg-blue-50'}`}><Globe size={18} /> Lịch sử - Địa lí</button>
                   </div>
                 </div>
 
@@ -899,22 +950,14 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                 )}
 
                 <div className="p-6 md:p-8">
-                  {/* PHẦN ĐỌC HIỂU (Cho Tiếng Việt) */}
+                  {/* PHẦN ĐỌC HIỂU */}
                   {currentData.readingText && (
                     <div className={`mb-10 p-6 md:p-8 bg-white rounded-2xl border-2 ${colors.border} shadow-sm`}>
-                        <h3 className={`text-2xl md:text-3xl font-bold ${colors.text} mb-6 text-center leading-tight`}>
-                            {currentData.readingTitle}
-                        </h3>
+                        <h3 className={`text-2xl md:text-3xl font-bold ${colors.text} mb-6 text-center leading-tight`}>{currentData.readingTitle}</h3>
                         <div className="text-lg leading-loose text-gray-800 space-y-4">
-                            {currentData.readingText.split('\n').map((p, idx) => (
-                                <p key={idx} className="text-justify md:px-4">{p}</p>
-                            ))}
+                            {currentData.readingText.split('\n').map((p, idx) => <p key={idx} className="text-justify md:px-4">{p}</p>)}
                         </div>
-                        {currentData.readingAuthor && (
-                            <p className={`text-right font-bold mt-6 text-lg ${colors.text} italic md:px-4`}>
-                                {currentData.readingAuthor}
-                            </p>
-                        )}
+                        {currentData.readingAuthor && <p className={`text-right font-bold mt-6 text-lg ${colors.text} italic md:px-4`}>{currentData.readingAuthor}</p>}
                     </div>
                   )}
 
@@ -927,7 +970,6 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
 
                     <div className="space-y-8">
                       {currentData.tracNghiem.map((q) => {
-                        // 1. Dạng câu Điền Khuyết (Lịch sử)
                         if (q.type === 'dien_khuyet') {
                           return (
                             <div key="dien_khuyet" className="bg-blue-50/50 p-5 rounded-xl border border-blue-100 shadow-sm">
@@ -957,9 +999,61 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                           );
                         }
 
-                        // 2. Dạng câu Nối Bước (Khoa học)
+                        if (q.type === 'dien_khuyet_kh2') {
+                          return (
+                            <div key="dien_khuyet_kh2" className="bg-teal-50/50 p-5 rounded-xl border border-teal-100 shadow-sm">
+                              <p className="font-semibold text-lg mb-3 text-gray-800">Câu 5 (2 điểm). Chọn từ thích hợp trong ngoặc để điền vào chỗ trống sao cho phù hợp.</p>
+                              <div className="flex flex-wrap gap-2 mb-4 p-3 bg-white rounded-lg border border-gray-200">
+                                <span className="text-gray-500 font-medium mr-2">Từ gợi ý:</span>
+                                {kh2_q5Options.map(opt => <span key={opt} className="bg-teal-100 text-teal-800 px-3 py-1 rounded-full text-sm font-medium">{opt}</span>)}
+                              </div>
+                              <div className="text-lg leading-loose text-gray-800 bg-white p-5 rounded-xl border border-gray-200">
+                                <p className="font-bold text-teal-900 mb-3">Nguyên nhân gây bệnh béo phì là:</p>
+                                <div className="space-y-4">
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <span className="font-bold text-teal-700">a)</span> 
+                                        <select disabled={submitted} value={answers['kh2_q5_a'] || ''} onChange={(e) => handleOptionChange('kh2_q5_a', e.target.value)} className={`flex-1 p-2 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-teal-500 text-teal-700' : answers['kh2_q5_a'] === kh2_q5Answers.a ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (Chọn từ) ---</option>{kh2_q5Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                        <span className="flex-[2]">các chất bột đường, chất béo, chất đạm.</span>
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <span className="font-bold text-teal-700">b)</span> 
+                                        <select disabled={submitted} value={answers['kh2_q5_b'] || ''} onChange={(e) => handleOptionChange('kh2_q5_b', e.target.value)} className={`flex-1 p-2 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-teal-500 text-teal-700' : answers['kh2_q5_b'] === kh2_q5Answers.b ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (Chọn từ) ---</option>{kh2_q5Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                        <span className="flex-[2]">ít vận động.</span>
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <span className="font-bold text-teal-700">c)</span> 
+                                        <select disabled={submitted} value={answers['kh2_q5_c'] || ''} onChange={(e) => handleOptionChange('kh2_q5_c', e.target.value)} className={`flex-1 p-2 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-teal-500 text-teal-700' : answers['kh2_q5_c'] === kh2_q5Answers.c ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (Chọn từ) ---</option>{kh2_q5Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                        <span className="flex-[2]">rau xanh và hoa quả.</span>
+                                    </div>
+                                    <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                                        <span className="font-bold text-teal-700">d)</span> 
+                                        <select disabled={submitted} value={answers['kh2_q5_d'] || ''} onChange={(e) => handleOptionChange('kh2_q5_d', e.target.value)} className={`flex-1 p-2 border-b-2 bg-transparent font-bold outline-none transition-colors ${!submitted ? 'border-teal-500 text-teal-700' : answers['kh2_q5_d'] === kh2_q5Answers.d ? 'border-green-500 text-green-600' : 'border-red-500 text-red-600'}`}><option value="" disabled>--- (Chọn từ) ---</option>{kh2_q5Options.map(opt => <option key={opt} value={opt}>{opt}</option>)}</select>
+                                        <span className="flex-[2]">nước ngọt.</span>
+                                    </div>
+                                </div>
+                              </div>
+                              {submitted && (
+                                <div className={`mt-4 p-4 rounded-xl border ${answers['kh2_q5_a'] === kh2_q5Answers.a && answers['kh2_q5_b'] === kh2_q5Answers.b && answers['kh2_q5_c'] === kh2_q5Answers.c && answers['kh2_q5_d'] === kh2_q5Answers.d ? 'bg-green-50 border-green-200' : 'bg-yellow-50 border-yellow-200'}`}>
+                                   <div className="bg-white p-3 rounded-lg border border-gray-200">
+                                       <p className="font-bold text-gray-700 mb-2 flex items-center gap-2"><BookOpen size={18} className="text-teal-500" /> Hướng dẫn đáp án:</p>
+                                       <ul className="space-y-2 text-gray-800 font-medium">
+                                         <li>a) <span className="text-green-600 font-bold">{kh2_q5Answers.a}</span> các chất bột đường...</li>
+                                         <li>b) <span className="text-green-600 font-bold">{kh2_q5Answers.b}</span> ít vận động.</li>
+                                         <li>c) <span className="text-green-600 font-bold">{kh2_q5Answers.c}</span> rau xanh và hoa quả.</li>
+                                         <li>d) <span className="text-green-600 font-bold">{kh2_q5Answers.d}</span> nước ngọt.</li>
+                                       </ul>
+                                   </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        }
+
                         if (q.type === 'noi_buoc') {
-                          return ( <MatchingQuestion key="noi_buoc" answers={answers} setAnswers={setAnswers} submitted={submitted} khoaHocAnswers={khoaHocAnswers} matchingOptions={quizData.khoaHoc.matchingOptions} /> );
+                          return ( <MatchingQuestion key="noi_buoc" answers={answers} setAnswers={setAnswers} submitted={submitted} matchingOptions={quizData.khoaHoc.matchingOptions} /> );
+                        }
+                        if (q.type === 'noi_buoc_kh2') {
+                          return ( <MushroomMatching key="noi_buoc_kh2" answers={answers} setAnswers={setAnswers} submitted={submitted} matchingOptions={quizData.khoaHoc2.matchingOptions} /> );
                         }
 
                         // 3. Dạng Trắc nghiệm thông thường
@@ -1035,7 +1129,7 @@ Lời Bác Hồ dạy giản dị mà đầy ý nghĩa, còn vang vọng mãi tr
                           {!q.hideDefaultHint && (
                               <div className={`p-5 bg-${currentData.theme}-50 border ${colors.border} rounded-xl`}>
                                 <h4 className={`font-bold ${colors.text} mb-3 flex items-center gap-2`}><BookOpen size={20} /> Hướng dẫn & Đáp án:</h4>
-                                <div className={`text-${currentData.theme}-950 text-lg leading-relaxed font-medium`}>{q.hint}</div>
+                                <div className={`text-${currentData.theme}-950 text-lg leading-relaxed font-medium whitespace-pre-line`}>{q.hint}</div>
                               </div>
                           )}
                         </div>
